@@ -36,6 +36,8 @@ public class HoverCave extends BasicGame {
 	private float wallOffset = 0;
 	private final int WALL_RES = 20;
 	private boolean dead = false;
+	private double speed = 0.1;
+	private int distance = 0;
 
 	public HoverCave() {
 		super("Hover Cave");
@@ -97,13 +99,13 @@ public class HoverCave extends BasicGame {
 			throws SlickException {
 		if (!dead) {
 			if (movingUp) {
-
 				dudeHeight -= ((double) delta) / 10.0;
 			} else {
 				dudeHeight += ((double) delta) / 10.0;
 			}
 			//TODO The speed can be adjusted here
-			wallOffset -= (float) delta / 10.0;
+			wallOffset -= (float) delta * speed;
+			speed += (double)delta/1000000000.0;
 			if (wallOffset <= -WALL_RES) {
 				wallOffset += WALL_RES;
 				popWall();
@@ -115,6 +117,7 @@ public class HoverCave extends BasicGame {
 			if (dudeHeight > lowerWall.get(2) || dudeHeight < upperWall.get(2)) {
 				dead = true;
 			}
+			distance += delta*speed;
 		}
 	}
 
@@ -122,6 +125,8 @@ public class HoverCave extends BasicGame {
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
 		//TODO Graphics?
+		g.drawString("Distance: " + distance, 10, 25);
+		g.drawString("Speed: " + speed, 10, 40);
 		if (!dead) {
 			for (int i = 0; i < upperWall.size() - 1; i++) {
 				g.drawLine(i * WALL_RES + wallOffset, upperWall.get(i), (i + 1)
