@@ -47,6 +47,7 @@ public class HoverCave extends BasicGame {
 	}
 
 	private void addToWall() {
+		//TODO Do some of these numbers need to be tweaked?
 		int offset1 = (int) (Math.random() * 50 - 20);
 		int offset2 = (int) (Math.random() * 50 - 30);
 		int nextUpper = upperWall.get(upperWall.size() - 1) + offset1;
@@ -101,6 +102,7 @@ public class HoverCave extends BasicGame {
 			} else {
 				dudeHeight += ((double) delta) / 10.0;
 			}
+			//TODO The speed can be adjusted here
 			wallOffset -= (float) delta / 10.0;
 			if (wallOffset <= -WALL_RES) {
 				wallOffset += WALL_RES;
@@ -108,6 +110,8 @@ public class HoverCave extends BasicGame {
 				addToWall();
 			}
 			// detect collisions
+			// TODO Improve collision detection to find the edge of the box
+			// against the edge of the cave.
 			if (dudeHeight > lowerWall.get(2) || dudeHeight < upperWall.get(2)) {
 				dead = true;
 			}
@@ -117,6 +121,7 @@ public class HoverCave extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
+		//TODO Graphics?
 		if (!dead) {
 			for (int i = 0; i < upperWall.size() - 1; i++) {
 				g.drawLine(i * WALL_RES + wallOffset, upperWall.get(i), (i + 1)
