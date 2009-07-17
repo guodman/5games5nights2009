@@ -9,7 +9,7 @@ public class Monster {
 	private float y;
 	private int width = 20;
 	private int height = 20;
-	private float speed = 0.1f;
+	private float speed = 0.2f;
 
 	public Monster(float xPos, float yPos, StabRoom sr) {
 		x = xPos;
@@ -18,7 +18,7 @@ public class Monster {
 	}
 
 	public void render(GameContainer container, Graphics g) {
-		g.drawRect((int) x - width / 2, (int) y - height / 2, width, height);
+		g.drawOval((int) x - width / 2, (int) y - height / 2, width, height);
 	}
 
 	public void update(GameContainer container, int delta) {
@@ -32,5 +32,13 @@ public class Monster {
 			x -= speed * Math.sin(theta);
 			y -= speed * Math.cos(theta);
 		}
+	}
+	
+	public float getDistance() {
+		System.out.println("Distance: sqrt("+sr.x+"-"+x+"^2 + "+sr.y+"-"+y+"^2");
+		int xdiff=(int) (sr.x-x);
+		int ydiff=(int) (sr.y-y);
+		System.out.println("Differences: dx="+xdiff+" dy="+ydiff);
+		return (float) Math.sqrt(xdiff*xdiff+ydiff*ydiff);
 	}
 }
