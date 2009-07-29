@@ -25,27 +25,6 @@ public class HoverCave extends BasicGame {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Connection conn;
-		File f = new File("scores.db");
-		if (f.exists()) {
-			try {
-				Class.forName("org.sqlite.JDBC");
-				conn = DriverManager.getConnection("jdbc:sqlite:scores.db");
-				Statement stat = conn.createStatement();
-				ResultSet r = stat.executeQuery("SELECT * FROM scores;");
-				while (r.next()) {
-					System.out.println("Score: " + r.getString("score"));
-				}
-				r.close();
-				conn.close();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		try {
 			AppGameContainer container = new AppGameContainer(new HoverCave(),
 					WIDTH, HEIGHT, false);
@@ -191,7 +170,37 @@ public class HoverCave extends BasicGame {
 			g.drawLine(WALL_RES * 1.5f, (int) dudeHeight, WALL_RES * 1.5f,
 					(int) dudeHeight);
 		} else {
-			g.drawString("You Are Dead, Enter to try again", 50, 50);
+			g.drawString("You Are Dead, Enter to try again", 50, 55);
+			displayScores(container, g);
+		}
+	}
+
+	public void displayScores(GameContainer container, Graphics g) {
+		File f = new File("scores.db");
+		if (f.exists()) {
+			try {
+				Class.forName("org.sqlite.JDBC");
+				Connection conn = DriverManager
+						.getConnection("jdbc:sqlite:scores.db");
+				Statement stat = conn.createStatement();
+				ResultSet r = stat
+						.executeQuery("SELECT * FROM scores ORDER BY score DESC LIMIT 10;");
+				int x = 50;
+				int y = 100;
+				g.drawString("High Scores:", x, y);
+				while (r.next()) {
+					y += 15;
+					g.drawString(r.getString("score"), x, y);
+				}
+				r.close();
+				conn.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
