@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="/Slick/lib/natives-mac.jar"/>
 	<classpathentry kind="lib" path="/Slick/lib/natives-win32.jar"/>
 	<classpathentry kind="lib" path="/Slick/lib/tinylinepp.jar"/>
+	<classpathentry kind="lib" path="/Libraries/sqlitejdbc-v056.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

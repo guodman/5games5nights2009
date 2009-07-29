@@ -1,6 +1,12 @@
 package org.guodman.hoverCave;
 
 import java.awt.Dimension;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 
 import org.newdawn.slick.AppGameContainer;
@@ -19,6 +25,27 @@ public class HoverCave extends BasicGame {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		Connection conn;
+		File f = new File("scores.db");
+		if (f.exists()) {
+			try {
+				Class.forName("org.sqlite.JDBC");
+				conn = DriverManager.getConnection("jdbc:sqlite:scores.db");
+				Statement stat = conn.createStatement();
+				ResultSet r = stat.executeQuery("SELECT * FROM scores;");
+				while (r.next()) {
+					System.out.println("Score: " + r.getString("score"));
+				}
+				r.close();
+				conn.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try {
 			AppGameContainer container = new AppGameContainer(new HoverCave(),
 					WIDTH, HEIGHT, false);
@@ -48,8 +75,30 @@ public class HoverCave extends BasicGame {
 		lowerWall.remove(0);
 	}
 
+	public void writeScore() {
+		try {
+			File f = new File("scores.db");
+			boolean newFile = !f.exists();
+			Class.forName("org.sqlite.JDBC");
+			Connection conn = DriverManager
+					.getConnection("jdbc:sqlite:scores.db");
+			Statement stat = conn.createStatement();
+			if (newFile) {
+				stat.executeUpdate("CREATE TABLE scores (score);");
+			}
+			stat.executeUpdate("INSERT INTO scores values (" + distance + ");");
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private void addToWall() {
-		//TODO Do some of these numbers need to be tweaked?
+		// TODO Do some of these numbers need to be tweaked?
 		int offset1 = (int) (Math.random() * 50 - 20);
 		int offset2 = (int) (Math.random() * 50 - 30);
 		int nextUpper = upperWall.get(upperWall.size() - 1) + offset1;
@@ -103,9 +152,9 @@ public class HoverCave extends BasicGame {
 			} else {
 				dudeHeight += ((double) delta) / 10.0;
 			}
-			//TODO The speed can be adjusted here
+			// TODO The speed can be adjusted here
 			wallOffset -= (float) delta * speed;
-			speed += (double)delta/1000000000.0;
+			speed += (double) delta / 1000000000.0;
 			if (wallOffset <= -WALL_RES) {
 				wallOffset += WALL_RES;
 				popWall();
@@ -116,15 +165,16 @@ public class HoverCave extends BasicGame {
 			// against the edge of the cave.
 			if (dudeHeight > lowerWall.get(2) || dudeHeight < upperWall.get(2)) {
 				dead = true;
+				writeScore();
 			}
-			distance += delta*speed;
+			distance += delta * speed;
 		}
 	}
 
 	@Override
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
-		//TODO Graphics?
+		// TODO Graphics?
 		g.drawString("Distance: " + distance, 10, 25);
 		g.drawString("Speed: " + speed, 10, 40);
 		if (!dead) {
