@@ -11,6 +11,7 @@ import java.util.Vector;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -63,7 +64,7 @@ public class HoverCave extends BasicGame {
 					.getConnection("jdbc:sqlite:scores.db");
 			Statement stat = conn.createStatement();
 			if (newFile) {
-				stat.executeUpdate("CREATE TABLE scores (score);");
+				stat.executeUpdate("CREATE TABLE scores (score int);");
 			}
 			stat.executeUpdate("INSERT INTO scores values (" + distance + ");");
 			conn.close();
@@ -139,6 +140,7 @@ public class HoverCave extends BasicGame {
 				popWall();
 				addToWall();
 			}
+			distance += delta;
 			// detect collisions
 			// TODO Improve collision detection to find the edge of the box
 			// against the edge of the cave.
@@ -146,7 +148,6 @@ public class HoverCave extends BasicGame {
 				dead = true;
 				writeScore();
 			}
-			distance += delta * speed;
 		}
 	}
 
@@ -188,9 +189,25 @@ public class HoverCave extends BasicGame {
 				int x = 50;
 				int y = 100;
 				g.drawString("High Scores:", x, y);
+				boolean scoreDisplayed = false;
 				while (r.next()) {
 					y += 15;
-					g.drawString(r.getString("score"), x, y);
+					int score = Integer.parseInt(r.getString("score"));
+					if (score == distance && !scoreDisplayed) {
+						scoreDisplayed = true;
+						g.setColor(Color.red);
+						g.drawString(r.getString("score") + " <-- Your Score",
+								x, y);
+						g.setColor(Color.white);
+					} else {
+						g.drawString(r.getString("score"), x, y);
+					}
+				}
+				if (!scoreDisplayed) {
+					y += 30;
+					g.setColor(Color.red);
+					g.drawString("Your Score Was: " + distance, x, y);
+					g.setColor(Color.white);
 				}
 				r.close();
 				conn.close();
