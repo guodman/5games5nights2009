@@ -15,6 +15,7 @@ public class LineGame extends BasicGame {
 	private static int gameHeight, gameWidth;
 	private boolean quit;
 	private static ArrayList<Renderable> screenImages = new ArrayList<Renderable>();
+	private static Creature player;
 	
 	/**
 	 * Sensible Defaults
@@ -27,7 +28,7 @@ public class LineGame extends BasicGame {
 	 * Game-specific variables
 	 */
 	private ArrayList<Card> deck;
-	private ArrayList<Creature> 
+	private ArrayList<Creature> line;
 	
 	
 	
@@ -58,6 +59,16 @@ public class LineGame extends BasicGame {
 
 	public void setup() {
 		deck = new ArrayList<Card>();
+		line = new ArrayList<Creature>();
+		
+		for(int i = 0;i<deckSize;i++) {
+			deck.add(new Card());
+		
+		}
+		for(int i = 0;i<lineSize;i++) {
+			line.add(new Creature());
+		}
+		
 		
 	}
 	
