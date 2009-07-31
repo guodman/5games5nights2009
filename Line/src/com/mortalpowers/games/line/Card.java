@@ -16,7 +16,7 @@ public abstract class Card extends Renderable {
 	}
 	
 	public static Card getRandomCard() {
-		return new Move(3);
+		return new Kill(3);
 	}
 	
 	public abstract void action();
@@ -54,7 +54,11 @@ public abstract class Card extends Renderable {
 			this.quantity = quantity;
 		}
 		@Override
-		public void action() {}
+		public void action() {
+			for (int i = 0; i < quantity; i++) {
+				LineGame.killLast();
+			}
+		}
 		@Override
 		public void init(GameContainer container) {}
 		@Override
