@@ -20,10 +20,10 @@ public abstract class Card extends Renderable {
 	}
 	
 	public static Card getRandomCard() {
-		return new KillFront(id++, 3);
+		return new Move(id++, -3);
 	}
 	
-	public abstract void action();
+	public abstract boolean action();
 	public abstract void init(GameContainer container);
 	public abstract void update(GameContainer container, int delta);
 	
@@ -38,7 +38,25 @@ public abstract class Card extends Renderable {
 			this.id = id;
 		}
 		@Override
-		public void action() {}
+		public boolean action() {
+			Creature p = null;
+			for (Creature c : LineGame.line) {
+				if (c.player) {
+					p = c;
+				}
+			}
+			if (distance > 0) {
+				if (LineGame.line.indexOf(p) < distance-1) {
+					
+				}
+				return false;
+			} else if (distance < 0) {
+				LineGame.draw(-distance);
+				return true;
+			} else {
+				return true;
+			}
+		}
 		@Override
 		public void init(GameContainer container) {}
 		@Override
@@ -61,9 +79,14 @@ public abstract class Card extends Renderable {
 			this.id = id;
 		}
 		@Override
-		public void action() {
-			for (int i = 0; i < quantity; i++) {
-				LineGame.killLast();
+		public boolean action() {
+			if (LineGame.line.size() >= quantity) {
+				for (int i = 0; i < quantity; i++) {
+					LineGame.killLast();
+				}
+				return true;
+			} else {
+				return false;
 			}
 		}
 		@Override
@@ -88,10 +111,15 @@ public abstract class Card extends Renderable {
 			this.id = id;
 		}
 		@Override
-		public void action() {
-			for (int i = 0; i < quantity; i++) {
-				Creature kill = LineGame.line.get(0);
-				LineGame.kill(kill);
+		public boolean action() {
+			if (LineGame.line.size() >= quantity) {
+				for (int i = 0; i < quantity; i++) {
+					Creature kill = LineGame.line.get(0);
+					LineGame.kill(kill);
+				}
+				return true;
+			} else {
+				return false;
 			}
 		}
 		@Override
