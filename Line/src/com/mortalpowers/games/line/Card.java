@@ -29,6 +29,8 @@ public abstract class Card extends Renderable {
 		public Move(int distance) {
 			super("Movement", "Move forward in line");
 			this.distance = distance;
+			x = 100;
+			y = 100;
 		}
 
 		@Override
