@@ -26,10 +26,11 @@ public class LineGame extends BasicGame {
 	/**
 	 * Game-specific variables
 	 */
-	private ArrayList<Card> deck;
-	private ArrayList<Creature> line;
-	private ArrayList<Card> hand;
-	private boolean gameOn;
+	private static ArrayList<Card> deck;
+	private static ArrayList<Creature> line;
+	private static Hand hand;
+
+	private static boolean gameOn;
 
 	public LineGame() {
 		super("Line");
@@ -56,7 +57,7 @@ public class LineGame extends BasicGame {
 	public void setup() {
 		deck = new ArrayList<Card>();
 		line = new ArrayList<Creature>();
-		hand = new ArrayList<Card>();
+		hand = new Hand();
 
 		for (int i = 0; i < deckSize; i++) {
 			deck.add(Card.getRandomCard());
@@ -84,28 +85,28 @@ public class LineGame extends BasicGame {
 
 	}
 
-	public void startTurn() {
+	public static void startTurn() {
 		screenImages.add(hand);
 	}
 
-	public void endTurn() {
+	public static void endTurn() {
 		if (deck.size() > 0) {
 			hand.add(deck.remove(0));
 		}
 	}
 
-	public void kill(Creature c) {
+	public static void kill(Creature c) {
 		if (c == player) {
 			gameOver();
 		} else {
 			line.remove(c);
 		}
 	}
-	public void killLast() {
-		
+	public static void killLast() {
+		kill(line.get(line.size() -1));
 	}
 
-	public void gameOver() {
+	public static void gameOver() {
 		gameOn = false;
 	}
 
