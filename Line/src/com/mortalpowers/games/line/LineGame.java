@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -67,7 +68,7 @@ public class LineGame extends BasicGame {
 		for (int i = 0; i < lineSize; i++) {
 			line.add(new Creature());
 		}
-		player = line.get((int) Math.round(Math.random() * line.size()));
+		player = line.get((int) Math.floor(Math.random() * line.size()));
 		player.player = true;
 
 		Collections.shuffle(deck);
@@ -88,17 +89,23 @@ public class LineGame extends BasicGame {
 	}
 
 	public static void startTurn() {
-		System.out.println("Starting this turn.");
-		screenImages.clear();
-		screenImages.add(hand);
-		
-		int n = 0;
-		int distance = (gameHeight - margin*2) / line.size();
-		for(Creature c : line) {
-			c.y = n++*distance + margin;
-			c.x = 500;
-			screenImages.add(c);
+		if(!gameOn || hand.size() <= 0 || deck.size() <= 0 || line.size() <= 0) {
+			gameOver();
+		} else {
+			System.out.println("Starting this turn.");
+			screenImages.clear();
+			screenImages.add(hand);
+			
+			int n = 0;
+			int distance = (gameHeight - margin*2) / line.size();
+			for(Creature c : line) {
+				c.y = n++*distance + margin;
+				c.x = 500;
+				screenImages.add(c);
+			}
 		}
+		
+		
 	}
 
 	public static void endTurn() {
@@ -118,6 +125,7 @@ public class LineGame extends BasicGame {
 	public static void kill(Creature c) {
 		if (c == player) {
 			gameOver();
+			System.out.println("game player was killed");
 		} else {
 			line.remove(c);
 		}
@@ -127,22 +135,27 @@ public class LineGame extends BasicGame {
 	}
 	
 	public static void useCard(Card c) {
-		c.action();
-		hand.remove(c);
-		endTurn();
+		if(c.action()) {
+			hand.remove(c);
+			endTurn();
+		}
+		
 	}
 
 	public static void gameOver() {
-		gameOn = false;
-		screenImages.add(new Renderable() {
-
-			@Override
-			void render(GameContainer container, Graphics g) {
-				g.drawString("Game is OVER!",margin, margin);
+		if(gameOn) {
+			gameOn = false;
+			screenImages.add(new Renderable() {
+	
+				@Override
+				void render(GameContainer container, Graphics g) {
+					g.setColor(Color.cyan);
+					g.drawString("Game is OVER!",margin, margin);
+					g.drawString("You were position " + (line.indexOf(player)+1),margin,margin+30);
+				}
 				
-			}
-			
-		});
+			});
+		}
 	}
 
 	@Override
@@ -170,6 +183,9 @@ public class LineGame extends BasicGame {
 
 		case Input.KEY_ESCAPE:
 			quit = true;
+			break;
+		case Input.KEY_SPACE:
+			setup();
 			break;
 
 		}

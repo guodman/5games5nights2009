@@ -41,4 +41,9 @@ public class Hand extends Renderable {
 		}
 	}
 
+
+	public int size() {
+		return hand.size();
+	}
+
 }
