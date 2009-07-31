@@ -7,7 +7,7 @@ import org.newdawn.slick.Graphics;
 
 public class Hand extends Renderable {
 
-	private ArrayList<Card> hand;
+	public ArrayList<Card> hand;
 	
 	public Hand() {
 		hand = new ArrayList<Card>();

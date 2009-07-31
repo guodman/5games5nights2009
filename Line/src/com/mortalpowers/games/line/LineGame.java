@@ -175,4 +175,28 @@ public class LineGame extends BasicGame {
 		}
 
 	}
+
+	public void mouseMoved(final int oldx, final int oldy, final int newx,
+			final int newy) {
+		
+	}
+
+	public void mousePressed(final int button, final int x, final int y) {
+		
+	}
+
+	public void mouseReleased(final int button, final int x, final int y) {
+		for (int i = hand.hand.size()-1; i > -1; i--) {
+			Card item = hand.hand.get(i);
+			if (x >= item.x && y >= item.y) {
+				System.out.println("Clicked on " + item.cardText);
+				useCard(item);
+				break;
+			}
+		}
+	}
+
+	public void mouseWheelMoved(final int arg0) {
+		
+	}
 }

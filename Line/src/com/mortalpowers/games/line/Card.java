@@ -12,6 +12,7 @@ import org.newdawn.slick.Graphics;
 public abstract class Card extends Renderable {
 	public final String cardType;
 	public final String cardText;
+	public static int id=0;
 	
 	public Card(String type, String text) {
 		cardType = type;
@@ -19,7 +20,7 @@ public abstract class Card extends Renderable {
 	}
 	
 	public static Card getRandomCard() {
-		return new KillBack(3);
+		return new KillFront(id++, 3);
 	}
 	
 	public abstract void action();
@@ -28,12 +29,13 @@ public abstract class Card extends Renderable {
 	
 	public static class Move extends Card {
 		private final int distance;
-		
-		public Move(final int distance) {
-			super("Movement", "Move forward in line");
+		public final int id;
+		public Move(final int id, final int distance) {
+			super("Movement", id + ": Move forward in line");
 			this.distance = distance;
 			x = 100;
 			y = 100;
+			this.id = id;
 		}
 		@Override
 		public void action() {}
@@ -52,9 +54,11 @@ public abstract class Card extends Renderable {
 	
 	public static class KillBack extends Card {
 		public final int quantity;
-		public KillBack(final int quantity) {
-			super("Kill", "Kill people in the back of the line");
+		public final int id;
+		public KillBack(final int id, final int quantity) {
+			super("Kill", id + ": Kill people in the back of the line");
 			this.quantity = quantity;
+			this.id = id;
 		}
 		@Override
 		public void action() {
@@ -77,9 +81,11 @@ public abstract class Card extends Renderable {
 	
 	public static class KillFront extends Card {
 		public final int quantity;
-		public KillFront(final int quantity) {
-			super("Kill", "Kill people in the back of the line");
+		public final int id;
+		public KillFront(final int id, final int quantity) {
+			super("Kill", id + ": Kill people in the front of the line");
 			this.quantity = quantity;
+			this.id = id;
 		}
 		@Override
 		public void action() {
