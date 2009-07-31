@@ -7,8 +7,6 @@ import org.newdawn.slick.Graphics;
 public abstract class Card extends Renderable {
 	public final String cardType;
 	public final String cardText;
-	public int x;
-	public int y;
 	
 	public Card(String type, String text) {
 		cardType = type;
