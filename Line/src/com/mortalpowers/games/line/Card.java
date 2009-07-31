@@ -16,7 +16,7 @@ public abstract class Card extends Renderable {
 	}
 	
 	public static Card getRandomCard() {
-		return new Kill(3);
+		return new KillBack(3);
 	}
 	
 	public abstract void action();
@@ -47,9 +47,9 @@ public abstract class Card extends Renderable {
 		public void update(GameContainer container, int delta) {}
 	}
 	
-	public static class Kill extends Card {
+	public static class KillBack extends Card {
 		public final int quantity;
-		public Kill(final int quantity) {
+		public KillBack(final int quantity) {
 			super("Kill", "Kill people in the back of the line");
 			this.quantity = quantity;
 		}
@@ -70,6 +70,31 @@ public abstract class Card extends Renderable {
 			g.drawString("Kills: " + quantity, x, y+15);
 			g.setColor(Color.white);
 		}
-		
+	}
+	
+	public static class KillFront extends Card {
+		public final int quantity;
+		public KillFront(final int quantity) {
+			super("Kill", "Kill people in the back of the line");
+			this.quantity = quantity;
+		}
+		@Override
+		public void action() {
+			for (int i = 0; i < quantity; i++) {
+				Creature kill = LineGame.line.get(0);
+				LineGame.kill(kill);
+			}
+		}
+		@Override
+		public void init(GameContainer container) {}
+		@Override
+		public void update(GameContainer container, int delta) {}
+		@Override
+		void render(GameContainer container, Graphics g) {
+			g.setColor(Color.red);
+			g.drawString(cardText, x, y);
+			g.drawString("Kills: " + quantity, x, y+15);
+			g.setColor(Color.white);
+		}
 	}
 }

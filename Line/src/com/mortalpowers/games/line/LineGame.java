@@ -27,7 +27,7 @@ public class LineGame extends BasicGame {
 	 * Game-specific variables
 	 */
 	private static ArrayList<Card> deck;
-	private static ArrayList<Creature> line;
+	public static ArrayList<Creature> line;
 	private static Hand hand;
 
 	private static boolean gameOn;
