@@ -1,5 +1,7 @@
 package com.mortalpowers.com.games.line;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -12,11 +14,31 @@ import org.newdawn.slick.SlickException;
 public class LineGame extends BasicGame {
 	private static int gameHeight, gameWidth;
 	private boolean quit;
+	private static ArrayList<Renderable> screenImages = new ArrayList<Renderable>();
+	
+	/**
+	 * Sensible Defaults
+	 */
+	final static int handSize = 5;
+	final static int deckSize = 50;
+	final static int lineSize = 20;
+	
+	/**
+	 * Game-specific variables
+	 */
+	private ArrayList<Card> deck;
+	private ArrayList<Creature> 
+	
+	
+	
 
 	public LineGame() {
 		super("Line");
-		gameHeight = 800;
-		gameWidth = 800;
+		gameWidth = 1024;
+		gameHeight = 768;
+		
+
+		
 	}
 
 	/**
@@ -34,9 +56,14 @@ public class LineGame extends BasicGame {
 		}
 	}
 
+	public void setup() {
+		deck = new ArrayList<Card>();
+		
+	}
+	
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		// TODO Auto-generated method stub
+		setup();
 
 	}
 
@@ -50,7 +77,9 @@ public class LineGame extends BasicGame {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < screenImages.size(); i++) {
+			screenImages.get(i).render(g);
+		}
 
 	}
 	public void keyPressed(int key, char c) {
