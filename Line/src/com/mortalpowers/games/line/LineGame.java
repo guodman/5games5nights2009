@@ -105,6 +105,10 @@ public class LineGame extends BasicGame {
 	public static void killLast() {
 		kill(line.get(line.size() -1));
 	}
+	
+	public static void useCard(Card c) {
+		c.action();
+	}
 
 	public static void gameOver() {
 		gameOn = false;

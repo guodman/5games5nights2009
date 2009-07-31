@@ -11,15 +11,27 @@ public class Hand extends Renderable {
 	
 	public Hand() {
 		hand = new ArrayList<Card>();
+		x = 50;
+		y=300;
 	}
-	@Override
+
+	
 	void render(GameContainer container, Graphics g) {
-		// TODO Auto-generated method stub
+		for(Card c : hand) {
+			c.render(container, g);
+		}
+	
 
 	}
-	public void add(Card remove) {
-		// TODO Auto-generated method stub
+	public void add(Card c) {
 		
+		hand.add(c);
+		organizeHand();
+	}
+	public void organizeHand() {
+		for(Card c : hand) {
+			c.x = x * (hand.size()-1) * 100;
+		}
 	}
 
 }
