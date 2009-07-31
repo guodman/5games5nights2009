@@ -28,6 +28,10 @@ public class Hand extends Renderable {
 		hand.add(c);
 		organizeHand();
 	}
+	public void remove(Card c) {
+		hand.remove(c);
+		organizeHand();
+	}
 	
 	public void organizeHand() {
 		int i = 0;

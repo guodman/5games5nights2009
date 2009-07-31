@@ -68,6 +68,7 @@ public class LineGame extends BasicGame {
 			line.add(new Creature());
 		}
 		player = line.get((int) Math.round(Math.random() * line.size()));
+		player.player = true;
 
 		Collections.shuffle(deck);
 		for (int i = 0; i < 5; i++) {
@@ -101,11 +102,19 @@ public class LineGame extends BasicGame {
 	}
 
 	public static void endTurn() {
-		if (deck.size() > 0) {
-			hand.add(deck.remove(0));
-		}
+		killLast();
+		
+		
+		startTurn();
 	}
 
+	public static void draw(int cards) {
+		for(int i = 0;i<cards;i++) {
+			if (deck.size() > 0) {
+				hand.add(deck.remove(0));
+			}
+		}
+	}
 	public static void kill(Creature c) {
 		if (c == player) {
 			gameOver();
@@ -119,6 +128,7 @@ public class LineGame extends BasicGame {
 	
 	public static void useCard(Card c) {
 		c.action();
+		endTurn();
 	}
 
 	public static void gameOver() {
