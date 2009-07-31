@@ -11,7 +11,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class LineGame extends BasicGame {
-	private static int gameHeight, gameWidth;
+	private static int gameHeight, gameWidth, margin;
 	private boolean quit;
 	private static ArrayList<Renderable> screenImages = new ArrayList<Renderable>();
 	private static Creature player;
@@ -36,6 +36,7 @@ public class LineGame extends BasicGame {
 		super("Line");
 		gameWidth = 1024;
 		gameHeight = 768;
+		margin = 50;
 
 	}
 
@@ -86,7 +87,17 @@ public class LineGame extends BasicGame {
 	}
 
 	public static void startTurn() {
+		System.out.println("Starting this turn.");
+		screenImages.clear();
 		screenImages.add(hand);
+		
+		int n = 0;
+		int distance = (gameHeight - margin*2) / line.size();
+		for(Creature c : line) {
+			c.y = n++*distance + margin;
+			c.x = 500;
+			screenImages.add(c);
+		}
 	}
 
 	public static void endTurn() {

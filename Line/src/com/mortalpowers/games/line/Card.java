@@ -4,6 +4,11 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
+/**
+ * Cards are currently 2 lines of text. 400x30
+ * @author stephen
+ *
+ */
 public abstract class Card extends Renderable {
 	public final String cardType;
 	public final String cardText;

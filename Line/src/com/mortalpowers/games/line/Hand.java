@@ -28,9 +28,12 @@ public class Hand extends Renderable {
 		hand.add(c);
 		organizeHand();
 	}
+	
 	public void organizeHand() {
+		int i = 0;
 		for(Card c : hand) {
-			c.x = x * (hand.size()-1) * 100;
+			c.y = 300 + i++ * 45;
+			c.x = 100;
 		}
 	}
 
