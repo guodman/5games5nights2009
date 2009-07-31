@@ -1,4 +1,4 @@
-package com.mortalpowers.com.games.line;
+package com.mortalpowers.games.line;
 
 import org.newdawn.slick.Graphics;
 
