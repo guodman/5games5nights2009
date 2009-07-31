@@ -128,11 +128,21 @@ public class LineGame extends BasicGame {
 	
 	public static void useCard(Card c) {
 		c.action();
+		hand.remove(c);
 		endTurn();
 	}
 
 	public static void gameOver() {
 		gameOn = false;
+		screenImages.add(new Renderable() {
+
+			@Override
+			void render(GameContainer container, Graphics g) {
+				g.drawString("Game is OVER!",margin, margin);
+				
+			}
+			
+		});
 	}
 
 	@Override
