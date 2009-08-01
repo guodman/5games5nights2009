@@ -13,11 +13,13 @@ import org.newdawn.slick.Graphics;
 public abstract class Card extends Renderable {
 	public final String cardType;
 	public final String cardText;
-	public static int id = 0;
+	public final int id;
+	public static int nextID = 0;
 
 	public Card(String type, String text) {
 		cardType = type;
 		cardText = text;
+		this.id = nextID++;
 	}
 
 	public static Card getRandomCard() {
@@ -25,11 +27,13 @@ public abstract class Card extends Renderable {
 		int power = (int) Math.floor(Math.random() * 3);
 		switch (rand) {
 		case 0:
-			return new Move(id++, power);
+			int sign=(int) (Math.random()*2.0);
+			if (sign == 0) { sign = -1; }
+			return new Move(power*sign);
 		case 1:
-			return new KillBack(id++, power);
+			return new KillBack(power);
 		case 2:
-			return new KillFront(id++, power);
+			return new KillFront(power);
 		default:
 			return null;
 		}
@@ -43,14 +47,12 @@ public abstract class Card extends Renderable {
 
 	public static class Move extends Card {
 		private final int distance;
-		public final int id;
 
-		public Move(final int id, final int distance) {
-			super("Movement", id + ": Move forward in line");
+		public Move(final int distance) {
+			super("Movement", "Move forward in line");
 			this.distance = distance;
 			x = 100;
 			y = 100;
-			this.id = id;
 		}
 
 		@Override
@@ -81,7 +83,7 @@ public abstract class Card extends Renderable {
 		@Override
 		public void render(GameContainer container, Graphics g) {
 			g.setColor(Color.cyan);
-			g.drawString(cardText, x, y);
+			g.drawString(id + ": " + cardText, x, y);
 			g.drawString("Distance: " + distance, x, y + 15);
 			g.setColor(Color.white);
 		}
@@ -89,16 +91,18 @@ public abstract class Card extends Renderable {
 		@Override
 		public void update(GameContainer container, int delta) {
 		}
+		
+		public String toString() {
+			return cardType + " - " + id + ": " + cardText;
+		}
 	}
 
 	public static class KillBack extends Card {
 		public final int quantity;
-		public final int id;
 
-		public KillBack(final int id, final int quantity) {
-			super("Kill", id + ": Kill people in the back of the line");
+		public KillBack(final int quantity) {
+			super("Kill", "Kill people in the back of the line");
 			this.quantity = quantity;
-			this.id = id;
 		}
 
 		@Override
@@ -124,7 +128,7 @@ public abstract class Card extends Renderable {
 		@Override
 		void render(GameContainer container, Graphics g) {
 			g.setColor(Color.red);
-			g.drawString(cardText, x, y);
+			g.drawString(id + ": " + cardText, x, y);
 			g.drawString("Kills: " + quantity, x, y + 15);
 			g.setColor(Color.white);
 		}
@@ -132,12 +136,10 @@ public abstract class Card extends Renderable {
 
 	public static class KillFront extends Card {
 		public final int quantity;
-		public final int id;
 
-		public KillFront(final int id, final int quantity) {
-			super("Kill", id + ": Kill people in the front of the line");
+		public KillFront(final int quantity) {
+			super("Kill", "Kill people in the front of the line");
 			this.quantity = quantity;
-			this.id = id;
 		}
 
 		@Override
@@ -164,7 +166,7 @@ public abstract class Card extends Renderable {
 		@Override
 		void render(GameContainer container, Graphics g) {
 			g.setColor(Color.red);
-			g.drawString(cardText, x, y);
+			g.drawString(id + ": " + cardText, x, y);
 			g.drawString("Kills: " + quantity, x, y + 15);
 			g.setColor(Color.white);
 		}
