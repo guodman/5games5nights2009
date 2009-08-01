@@ -23,6 +23,7 @@ public class Creature extends Renderable {
 			g.setColor(Color.green);
 		}
 		g.fillOval(x,y,30,30);
-		
+		g.drawString("" + LineGame.line.indexOf(this), x+35, y);
+		g.setColor(Color.white);
 	}
 }
