@@ -34,6 +34,11 @@ public class CowGame extends BasicGame {
 
 	public CowGame() {
 		super("Cow");
+		for (int i = 0; i < CONVEYOR_LENGTH; i++) {
+			for (int j = 0; j < NUMBER_OF_BELTS; j++) {
+				conveyor[i][j] = null;
+			}
+		}
 	}
 
 	@Override
