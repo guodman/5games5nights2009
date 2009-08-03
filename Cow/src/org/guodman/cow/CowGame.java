@@ -15,7 +15,9 @@ public class CowGame extends BasicGame {
 	public static final int WIDTH=1024;
 	public static final int HEIGHT=768;
 	final public static int tileSize = 64;
-public static boolean quit = false;
+	public static final float CONVEYOR_OFFSET_X = 0;
+	public static final float CONVEYOR_OFFSET_Y = 0;
+	public static boolean quit = false;
 	
 	/**
 	 * @param args
@@ -35,6 +37,7 @@ public static boolean quit = false;
 	public List<Trap> hand = new ArrayList<Trap>();
 	public List<Trap> deck = new ArrayList<Trap>();
 	public Trap[][] conveyor = new Trap[CONVEYOR_LENGTH][NUMBER_OF_BELTS];
+	public List<Cow> cows = new ArrayList<Cow>();
 
 	public CowGame() {
 		super("Cow");
@@ -47,14 +50,14 @@ public static boolean quit = false;
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		// TODO Auto-generated method stub
-		
+		for (int i = 0; i < 3; i++) {
+			cows.add(new Cow(i, 0));
+		}
 	}
 
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
-		// TODO Auto-generated method stub
 		if(quit) {
 			container.exit();
 		}
@@ -72,6 +75,17 @@ public static boolean quit = false;
 		}
 		for (int i = tileSize; i < HEIGHT; i += tileSize) {
 			g.drawLine(0, i, WIDTH, i);
+		}
+		// Draw the traps
+		for (int i = 0; i < CONVEYOR_LENGTH; i++) {
+			for (int j = 0; j < NUMBER_OF_BELTS; j++) {
+				if (conveyor[i][j] != null) {
+					conveyor[i][j].render(container, g);
+				}
+			}
+		}
+		for (Cow c : cows) {
+			c.render(container, g);
 		}
 	}
 
@@ -95,13 +109,9 @@ public static boolean quit = false;
 		// System.out.println("Someone pressed " + key);
 
 		switch (key) {
-
-
 		case Input.KEY_ESCAPE:
 			quit = true;
 			break;
-		
-
 		}
 
 	}
