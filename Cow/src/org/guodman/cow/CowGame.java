@@ -9,7 +9,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-public class Main extends BasicGame {
+public class CowGame extends BasicGame {
 	public static final int WIDTH=1024;
 	public static final int HEIGHT=768;
 
@@ -18,7 +18,7 @@ public class Main extends BasicGame {
 	 */
 	public static void main(String[] args) {
 		try {
-			AppGameContainer container = new AppGameContainer(new Main(),
+			AppGameContainer container = new AppGameContainer(new CowGame(),
 					WIDTH, HEIGHT, false);
 			container.start();
 		} catch (Exception e) {
@@ -32,7 +32,7 @@ public class Main extends BasicGame {
 	public List<Trap> deck = new ArrayList<Trap>();
 	public Trap[][] conveyor = new Trap[CONVEYOR_LENGTH][NUMBER_OF_BELTS];
 
-	public Main() {
+	public CowGame() {
 		super("Cow");
 	}
 
