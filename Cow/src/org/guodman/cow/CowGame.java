@@ -47,6 +47,7 @@ public class CowGame extends BasicGame {
 	public Trap[][] conveyor = new Trap[CONVEYOR_LENGTH][NUMBER_OF_BELTS];
 	public List<Cow> cows = new ArrayList<Cow>();
 	public int turnCountDown = TURN_TIME;
+	public Trap activeTile = null;
 
 	public CowGame() {
 		super("Cow");
@@ -61,13 +62,11 @@ public class CowGame extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		container.setAlwaysRender(true);
-		
-		 images = new ArrayList<Image>();
-		 images.add(new Image("/resources/cow.png"));
-		 images.add(new Image("/resources/human.png"));
-		 images.add(new Image("/resources/trap-chute-left.png"));
-		 images.add(new Image("/resources/trap-bird.png"));
-		 
+		images = new ArrayList<Image>();
+		images.add(new Image("/resources/cow.png"));
+		images.add(new Image("/resources/human.png"));
+		images.add(new Image("/resources/trap-chute-left.png"));
+		images.add(new Image("/resources/trap-bird.png"));
 		for (int i = 0; i < 3; i++) {
 			cows.add(new Cow(i, 0));
 		}
@@ -76,6 +75,8 @@ public class CowGame extends BasicGame {
 		for(int i = 0;i<NUMBER_OF_BELTS;i++) {
 			conveyor[CONVEYOR_LENGTH-1][i] = new Trap.Success().setLocation(CONVEYOR_LENGTH-1,i);
 		}
+		hand.add(new Trap.Mover(-1, 1, false).setLocation(1, NUMBER_OF_BELTS+1));
+		hand.add(new Trap.Mover(1, 3, false).setLocation(3, NUMBER_OF_BELTS+1));
 	}
 
 	@Override
@@ -89,11 +90,6 @@ public class CowGame extends BasicGame {
 			turnCountDown += TURN_TIME;
 			for (Cow c : cows) {
 				c.location++;
-				if(c.dead){
-					//System.out.println("This cow is dead, why is he still on the conveyor?");
-				} else {
-					//System.out.println("This cow is alive and well.");
-				}
 				if (conveyor[c.location][c.conveyor] != null) {
 					conveyor[c.location][c.conveyor].actOnEntry(c);
 				}
@@ -127,8 +123,13 @@ public class CowGame extends BasicGame {
 				}
 			}
 		}
+		// Draw the cows
 		for (Cow c : cows) {
 			c.render(container, g);
+		}
+		// Draw the hand
+		for (Trap t : hand) {
+			t.render(container, g);
 		}
 	}
 
@@ -142,7 +143,26 @@ public class CowGame extends BasicGame {
 	}
 
 	public void mouseReleased(final int button, final int x, final int y) {
-		
+		// if we are on the conveyor belt
+		if (x > CONVEYOR_OFFSET_X && x < CONVEYOR_OFFSET_X+CONVEYOR_LENGTH*tileSize && y > CONVEYOR_OFFSET_Y && y < CONVEYOR_OFFSET_Y+NUMBER_OF_BELTS*tileSize) {
+			System.out.println("clicked on the belt");
+			int belt = (int) ((y - CONVEYOR_OFFSET_Y) / tileSize);
+			int location = (int) ((x - CONVEYOR_OFFSET_X) / tileSize);
+			System.out.println("Belt: " + belt + " Location: " + location);
+			if (activeTile != null && conveyor[location][belt] == null) {
+				conveyor[location][belt] = activeTile;
+				hand.remove(activeTile);
+				activeTile = null;
+			}
+		}
+		// if we are on the hand
+		for (Trap t : hand) {
+			if (x > t.x && x < t.x+tileSize && y > t.y && y < t.y+tileSize) {
+				activeTile = t;
+				System.out.println("clicked on tile " + t.name + " " + t.toString());
+				break;
+			}
+		}
 	}
 
 	public void mouseWheelMoved(final int arg0) {
