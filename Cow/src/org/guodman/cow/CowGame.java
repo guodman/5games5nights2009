@@ -144,7 +144,8 @@ public class CowGame extends BasicGame {
 		// Draw the hand
 		for (Trap t : hand) {
 			t.render(container, g);
-	}
+		}
+		g.drawString("Your score is: " + score, 10, CONVEYOR_OFFSET_Y+NUMBER_OF_BELTS*tileSize);
 	}
 
 	public void mouseMoved(final int oldx, final int oldy, final int newx,
