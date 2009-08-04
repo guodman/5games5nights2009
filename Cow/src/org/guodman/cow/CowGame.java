@@ -40,6 +40,9 @@ public class CowGame extends BasicGame {
 	
 	public List<Trap> hand = new ArrayList<Trap>();
 	public List<Trap> deck = new ArrayList<Trap>();
+	/**
+	 * length or location on conveyor belt is first, number of belts is second
+	 */
 	public Trap[][] conveyor = new Trap[CONVEYOR_LENGTH][NUMBER_OF_BELTS];
 	public List<Cow> cows = new ArrayList<Cow>();
 	public int turnCountDown = TURN_TIME;
