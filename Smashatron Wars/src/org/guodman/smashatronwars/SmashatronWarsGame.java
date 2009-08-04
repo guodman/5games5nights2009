@@ -53,6 +53,7 @@ public class SmashatronWarsGame extends BasicGame {
 					+ e.getMessage());
 		}
 		player = new Player();
+		container.setAlwaysRender(true);
 	}
 
 	@Override
@@ -62,46 +63,8 @@ public class SmashatronWarsGame extends BasicGame {
 			container.exit();
 		}
 
-		if (joystick != null) {
-			float x1, y1, x2, y2;
-			switch (joystick.getAxisCount()) {
-			// Dougbert controller
-			case 4:
-				x1 = joystick.getAxisValue(0);
-				y1 = joystick.getAxisValue(1);
-				x2 = joystick.getAxisValue(2);
-				y2 = joystick.getAxisValue(3);
-				break;
-
-			// Xbox controller
-			case 7:
-				x1 = joystick.getAxisValue(1);
-				y1 = joystick.getAxisValue(2);
-				x2 = joystick.getAxisValue(4);
-				y2 = joystick.getAxisValue(5);
-
-				break;
-
-			default:
-				x1 = x2 = y1 = y2 = 0;
-			}
-			/**
-			 * Sanitize close to zero values.
-			 */
-			if(Math.abs(x1) < .1) x1 = 0;
-			if(Math.abs(x2) < .1) x2 = 0;
-			if(Math.abs(y1) < .1) y1 = 0;
-			if(Math.abs(y2) < .1) y2 = 0;
-			
-			
-			player.x += x1 * SPEED;
-			player.y += y1 * SPEED;
-			
-			/**
-			 * Sanitize board values
-			 */
-			//if()
-		}
+		player.update(joystick, delta);
+		
 
 	}
 
