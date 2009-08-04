@@ -57,16 +57,6 @@ public class Trap {
 		}
 	}
 
-	public static class Wall extends Trap {
-		public Wall(boolean right) {
-			super(3);
-			if (right) {
-				canBeEnteredRight = false;
-			} else {
-				canBeEnteredLeft = false;
-			}
-		}
-	}
 
 	public static class Mover extends Trap {
 		/**
@@ -93,6 +83,10 @@ public class Trap {
 			}
 			flip();
 		}
+		public void render(GameContainer c, Graphics g) {
+			super.render(c,g);
+			g.drawString(conveyorChange + "x" + locationChange,x,y+20);
+		}
 	}
 
 	public static class Success extends Trap {
@@ -101,7 +95,8 @@ public class Trap {
 		}
 
 		public void actOnEntry(Cow c) {
-			CowGame.score++;
+			if(!flipped) {CowGame.score++;}
+			flip();
 			c.dead = true;
 			System.out.println("You got a point for saving a cow!");
 			System.out.println("Total score is " + CowGame.score);
