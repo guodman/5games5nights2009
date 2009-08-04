@@ -27,4 +27,25 @@ public class Cow {
 				conveyor*CowGame.tileSize+CowGame.CONVEYOR_OFFSET_Y);
 		g.drawImage(imageResource, location*CowGame.tileSize+CowGame.CONVEYOR_OFFSET_X, conveyor*CowGame.tileSize+CowGame.CONVEYOR_OFFSET_Y);
 	}
+
+	public boolean sanitizeLocation() {
+		if(location < 0) {
+			location = 0;
+			return false;
+		}
+		if( location >= CowGame.CONVEYOR_LENGTH) {
+			location = CowGame.CONVEYOR_LENGTH - 1;
+			return false;
+		}
+		if(conveyor < 0) {
+			conveyor = 0;
+			return false;
+		}
+		if(conveyor >= CowGame.NUMBER_OF_BELTS) {
+			conveyor = CowGame.NUMBER_OF_BELTS - 1;
+			return false;
+		}
+		return true;
+		
+	}
 }
