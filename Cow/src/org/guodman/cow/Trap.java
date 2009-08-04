@@ -15,6 +15,13 @@ public class Trap {
 		imgResource = CowGame.images.get(2);
 	}
 	
+	public boolean canBeEnteredLeft = true;
+	public boolean canBeEnteredRight = true;
+	
+	public void actOnEntry(Cow c) {
+		System.out.println("Error, trap with no defined action for cow.");
+	}
+	
 	public void update(GameContainer c, int delta) {
 		
 	}
@@ -34,13 +41,30 @@ public class Trap {
 		}
 	}
 	public class Wall extends Trap {
-		public Wall() {
-			
+		public Wall(boolean right) {
+			if(right) {
+				canBeEnteredRight = false;
+			} else {
+				canBeEnteredLeft = false;
+			}
 		}
 	}
 	public class Mover extends Trap {
-		public Mover() {
-			
+		/**
+		 * xTileChange and yTileChange indicate where the cow is pushed to.
+		 */
+		int conveyorChange, locationChange;
+		boolean skipIntermediate = false;
+		
+		public Mover(int conveyorChange, int locationChange, boolean skipIntermediateSteps) {
+			this.conveyorChange = conveyorChange;
+			this.locationChange = locationChange;
+			skipIntermediate = skipIntermediateSteps;
+		}
+		public void actOnEntry(Cow c) {
+			c.conveyor += conveyorChange;
+			c.location += locationChange;
+			c.sanitizeLocation();
 		}
 	}
 }
