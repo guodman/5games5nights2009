@@ -3,6 +3,7 @@ package org.guodman.cow;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.LWJGLException;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -11,17 +12,18 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 
 public class CowGame extends BasicGame {
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 768;
 	public static final int CONVEYOR_LENGTH = 10;
-	public static final int NUMBER_OF_BELTS = 3;
+	public static final int NUMBER_OF_BELTS = 6;
 	final public static int tileSize = 64;
 	public static final float CONVEYOR_OFFSET_X = 0;
 	public static final float CONVEYOR_OFFSET_Y = 0;
 	public static boolean quit = false;
-	public static final int TURN_TIME = 500;
+	public static final int TURN_TIME = 2000;
 	public static ArrayList<Image> images;
 	public static CowGame me;
 	public static int score = 0;
@@ -49,6 +51,7 @@ public class CowGame extends BasicGame {
 	public int turnCountDown = TURN_TIME;
 	public Trap activeTile = null;
 	public boolean running = false;
+	public Sound moveSound = null;
 
 	public CowGame() {
 		super("Cow");
@@ -63,7 +66,7 @@ public class CowGame extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		container.setAlwaysRender(true);
-
+		moveSound = new Sound("resources/moo01.ogg");
 		images = new ArrayList<Image>();
 		images.add(new Image("/resources/cow.png"));
 		images.add(new Image("/resources/human.png"));
@@ -73,7 +76,7 @@ public class CowGame extends BasicGame {
 		images.add(new Image("/resources/cow-death.png"));
 		images.add(new Image("/resources/cow-life.png"));
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < NUMBER_OF_BELTS; i++) {
 			cows.add(new Cow(i, 0));
 		}
 		conveyor[4][1] = new Trap.Mover(1, 1, true).setLocation(4, 1);
@@ -95,6 +98,7 @@ public class CowGame extends BasicGame {
 		if (running) {
 			turnCountDown -= delta;
 			if (turnCountDown < 0) {
+				moveSound.play();
 				turnCountDown += TURN_TIME;
 				for (Cow c : cows) {
 					c.location++;

@@ -9,5 +9,15 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/Libraries/sqlitejdbc-v056.jar"/>
+	<classpathentry kind="lib" path="/Slick/lib/jogg-0.0.7.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Slick/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Slick/lib/jorbis-0.0.15.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Slick/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
