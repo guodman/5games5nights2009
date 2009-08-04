@@ -65,7 +65,9 @@ public class CowGame extends BasicGame {
 		 images = new ArrayList<Image>();
 		 images.add(new Image("/resources/cow.png"));
 		 images.add(new Image("/resources/human.png"));
-		 images.add(new Image("/resources/chute-left.png"));
+		 images.add(new Image("/resources/trap-chute-left.png"));
+		 images.add(new Image("/resources/trap-bird.png"));
+		 
 		for (int i = 0; i < 3; i++) {
 			cows.add(new Cow(i, 0));
 		}
@@ -88,9 +90,9 @@ public class CowGame extends BasicGame {
 			for (Cow c : cows) {
 				c.location++;
 				if(c.dead){
-					System.out.println("This cow is dead, why is he still on the conveyor?");
+					//System.out.println("This cow is dead, why is he still on the conveyor?");
 				} else {
-					System.out.println("This cow is alive and well.");
+					//System.out.println("This cow is alive and well.");
 				}
 				if (conveyor[c.location][c.conveyor] != null) {
 					conveyor[c.location][c.conveyor].actOnEntry(c);

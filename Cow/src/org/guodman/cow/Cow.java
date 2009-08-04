@@ -34,23 +34,24 @@ public class Cow {
 	 * @return
 	 */
 	public boolean sanitizeLocation() {
+		boolean result = true;
 		if(location < 0) {
 			location = 0;
-			return false;
+			result = false;
 		}
 		if( location >= CowGame.CONVEYOR_LENGTH) {
 			location = CowGame.CONVEYOR_LENGTH - 1;
-			return false;
+			result = false;
 		}
 		if(conveyor < 0) {
 			conveyor = 0;
-			return false;
+			result = false;
 		}
 		if(conveyor >= CowGame.NUMBER_OF_BELTS) {
 			conveyor = CowGame.NUMBER_OF_BELTS - 1;
-			return false;
+			result = false;
 		}
-		return true;
+		return result;
 		
 	}
 }

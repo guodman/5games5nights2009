@@ -11,7 +11,7 @@ public class Trap {
 	public int states;
 
 	public Trap() {
-		imgResource = CowGame.images.get(2);
+		imgResource = CowGame.images.get(3);
 		
 	}
 	public Trap setLocation(int location,int conveyor) {
@@ -27,9 +27,10 @@ public class Trap {
 
 	public void actOnEntry(Cow c) {
 		if(c.sanitizeLocation()) {
-			System.out.println("sanitation was necessary.");
+			System.out.println("sanitation wasn't necessary.");
 		} else {
-			System.out.println("Sanitation wasn't necessary");
+			System.out.println("Sanitation was necessary");
+			System.out.println("Currently at " + c.conveyor + " and location: " + c.location);
 		}
 		Trap t = CowGame.me.conveyor[c.location][c.conveyor];
 		if (t != null && t != this) {
