@@ -52,7 +52,7 @@ public class SmashatronWarsGame extends BasicGame {
 		if (joystick != null) {
 			String joyInfo="Joystick Info: ";
 			for (int i=0; i < joystick.getAxisCount(); i++) {
-				joyInfo += joystick.getAxisValue(i);
+				joyInfo += joystick.getAxisValue(i) + " : ";
 			}
 			System.out.println(joyInfo);
 		}
