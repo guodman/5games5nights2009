@@ -21,9 +21,10 @@ public class CowGame extends BasicGame {
 	public static final float CONVEYOR_OFFSET_X = 0;
 	public static final float CONVEYOR_OFFSET_Y = 0;
 	public static boolean quit = false;
-	public static final int TURN_TIME = 2000;
+	public static final int TURN_TIME = 500;
 	public static ArrayList<Image> images;
 	public static CowGame me;
+	public static int score = 0;
 	
 	/**
 	 * @param args
@@ -59,12 +60,19 @@ public class CowGame extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		container.setAlwaysRender(true);
+		
 		 images = new ArrayList<Image>();
 		 images.add(new Image("/resources/cow.png"));
 		 images.add(new Image("/resources/human.png"));
 		 images.add(new Image("/resources/chute-left.png"));
 		for (int i = 0; i < 3; i++) {
 			cows.add(new Cow(i, 0));
+		}
+		conveyor[4][1] = new Trap.Mover(1, 1, true).setLocation(4,1);
+		conveyor[8][2] = new Trap.Mover(3, 2, false).setLocation(8,2);
+		for(int i = 0;i<NUMBER_OF_BELTS;i++) {
+			conveyor[CONVEYOR_LENGTH-1][i] = new Trap.Success().setLocation(CONVEYOR_LENGTH-1,i);
 		}
 	}
 
@@ -79,8 +87,18 @@ public class CowGame extends BasicGame {
 			turnCountDown += TURN_TIME;
 			for (Cow c : cows) {
 				c.location++;
+				if(c.dead){
+					System.out.println("This cow is dead, why is he still on the conveyor?");
+				} else {
+					System.out.println("This cow is alive and well.");
+				}
 				if (conveyor[c.location][c.conveyor] != null) {
 					conveyor[c.location][c.conveyor].actOnEntry(c);
+				}
+			}
+			for(int i = cows.size()-1;i>=0;i--) {
+				if(cows.get(i).dead) {
+					cows.remove(i);
 				}
 			}
 		}

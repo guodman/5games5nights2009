@@ -12,18 +12,30 @@ public class Trap {
 
 	public Trap() {
 		imgResource = CowGame.images.get(2);
+		
 	}
+	public Trap setLocation(int location,int conveyor) {
+		x = location*CowGame.tileSize + CowGame.CONVEYOR_OFFSET_X;
+		y = conveyor*CowGame.tileSize + CowGame.CONVEYOR_OFFSET_Y;
+		return this;
+	}
+	
+	
 
 	public boolean canBeEnteredLeft = true;
 	public boolean canBeEnteredRight = true;
 
 	public void actOnEntry(Cow c) {
-		if (c.sanitizeLocation()) {
-			Trap t = CowGame.me.conveyor[c.location][c.conveyor];
-			if (t != null && t != this) {
-				t.actOnEntry(c);
-			}
+		if(c.sanitizeLocation()) {
+			System.out.println("sanitation was necessary.");
+		} else {
+			System.out.println("Sanitation wasn't necessary");
 		}
+		Trap t = CowGame.me.conveyor[c.location][c.conveyor];
+		if (t != null && t != this) {
+			t.actOnEntry(c);
+		}
+		
 	}
 
 	public void flip() {
@@ -38,19 +50,8 @@ public class Trap {
 		g.drawImage(imgResource, x, y);
 	}
 
-	public class Chute extends Trap {
-		public Chute() {
 
-		}
-	}
-
-	public class Magnet extends Trap {
-		public Magnet() {
-
-		}
-	}
-
-	public class Wall extends Trap {
+	public static class Wall extends Trap {
 		public Wall(boolean right) {
 			if (right) {
 				canBeEnteredRight = false;
@@ -60,7 +61,7 @@ public class Trap {
 		}
 	}
 
-	public class Mover extends Trap {
+	public static class Mover extends Trap {
 		/**
 		 * xTileChange and yTileChange indicate where the cow is pushed to.
 		 */
@@ -78,6 +79,19 @@ public class Trap {
 			c.conveyor += conveyorChange;
 			c.location += locationChange;
 			super.actOnEntry(c);
+		}
+	}
+	public static class Success extends Trap {
+		public void actOnEntry(Cow c) {
+			CowGame.score++;
+			c.dead = true;
+			System.out.println("You got a point for saving a cow!");
+			System.out.println("Total score is " + CowGame.score);
+		}
+	}
+	public static class Failure extends Trap {
+		public void actOnEntry(Cow c) {
+			c.dead = true;
 		}
 	}
 }

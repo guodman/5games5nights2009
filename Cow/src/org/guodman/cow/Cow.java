@@ -8,6 +8,7 @@ public class Cow {
 	public int location;
 	public int conveyor;
 	public Image imageResource;
+	public boolean dead = false;
 	
 	public Cow(int conv, int loc) {
 		location = loc;
@@ -28,6 +29,10 @@ public class Cow {
 		g.drawImage(imageResource, location*CowGame.tileSize+CowGame.CONVEYOR_OFFSET_X, conveyor*CowGame.tileSize+CowGame.CONVEYOR_OFFSET_Y);
 	}
 
+	/**
+	 * False if there was a problem with the location that was fixed, true if nothing was changed.
+	 * @return
+	 */
 	public boolean sanitizeLocation() {
 		if(location < 0) {
 			location = 0;
