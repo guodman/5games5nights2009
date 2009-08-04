@@ -27,11 +27,15 @@ public class CowGame extends BasicGame {
 	public static ArrayList<Image> images;
 	public static CowGame me;
 	public static int score = 0;
+	public static boolean nosound = false;
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		if (args.length != 0 && args[0].equalsIgnoreCase("nosound")) {
+			nosound = true;
+		}
 		try {
 			AppGameContainer container = new AppGameContainer(new CowGame(),
 					WIDTH, HEIGHT, false);
@@ -66,7 +70,9 @@ public class CowGame extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		container.setAlwaysRender(true);
-		moveSound = new Sound("resources/moo01.ogg");
+		if (!nosound) {
+			moveSound = new Sound("resources/moo01.ogg");
+		}
 		images = new ArrayList<Image>();
 		images.add(new Image("/resources/cow.png"));
 		images.add(new Image("/resources/human.png"));
@@ -98,7 +104,9 @@ public class CowGame extends BasicGame {
 		if (running) {
 			turnCountDown -= delta;
 			if (turnCountDown < 0) {
-				moveSound.play();
+				if (moveSound != null) {
+					moveSound.play();
+				}
 				turnCountDown += TURN_TIME;
 				for (Cow c : cows) {
 					c.location++;
