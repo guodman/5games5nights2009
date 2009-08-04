@@ -8,7 +8,6 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -19,7 +18,7 @@ public class CowGame extends BasicGame {
 	public static final float CONVEYOR_OFFSET_X = 0;
 	public static final float CONVEYOR_OFFSET_Y = 0;
 	public static boolean quit = false;
-	public static ArrayList<Image> images;
+	public static final int TURN_TIME = 2000;
 	
 	/**
 	 * @param args
@@ -40,6 +39,7 @@ public class CowGame extends BasicGame {
 	public List<Trap> deck = new ArrayList<Trap>();
 	public Trap[][] conveyor = new Trap[CONVEYOR_LENGTH][NUMBER_OF_BELTS];
 	public List<Cow> cows = new ArrayList<Cow>();
+	public int turnCountDown = TURN_TIME;
 
 	public CowGame() {
 		super("Cow");
@@ -52,15 +52,9 @@ public class CowGame extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		 images = new ArrayList<Image>();
-		 images.add(new Image("/resources/cow.png"));
-		 images.add(new Image("/resources/human.png"));
-		 images.add(new Image("/resources/chute-left.png"));
 		for (int i = 0; i < 3; i++) {
 			cows.add(new Cow(i, 0));
 		}
-		
-		
 	}
 
 	@Override
@@ -68,6 +62,13 @@ public class CowGame extends BasicGame {
 			throws SlickException {
 		if(quit) {
 			container.exit();
+		}
+		turnCountDown -= delta;
+		if (turnCountDown < 0) {
+			turnCountDown += TURN_TIME;
+			for (Cow c : cows) {
+				c.location++;
+			}
 		}
 	}
 
@@ -114,13 +115,10 @@ public class CowGame extends BasicGame {
 		
 	}
 	public void keyPressed(int key, char c) {
-		// System.out.println("Someone pressed " + key);
-
 		switch (key) {
 		case Input.KEY_ESCAPE:
 			quit = true;
 			break;
 		}
-
 	}
 }
