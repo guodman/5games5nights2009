@@ -48,6 +48,7 @@ public class CowGame extends BasicGame {
 	public List<Cow> cows = new ArrayList<Cow>();
 	public int turnCountDown = TURN_TIME;
 	public Trap activeTile = null;
+	public boolean running = false;
 
 	public CowGame() {
 		super("Cow");
@@ -91,18 +92,25 @@ public class CowGame extends BasicGame {
 		if (quit) {
 			container.exit();
 		}
-		turnCountDown -= delta;
-		if (turnCountDown < 0) {
-			turnCountDown += TURN_TIME;
-			for (Cow c : cows) {
-				c.location++;
-				if (conveyor[c.location][c.conveyor] != null) {
-					conveyor[c.location][c.conveyor].actOnEntry(c);
+		if (running) {
+			turnCountDown -= delta;
+			if (turnCountDown < 0) {
+				turnCountDown += TURN_TIME;
+				for (Cow c : cows) {
+					c.location++;
+					if (conveyor[c.location][c.conveyor] != null) {
+						conveyor[c.location][c.conveyor].actOnEntry(c);
+					}
 				}
-			}
-			for (int i = cows.size() - 1; i >= 0; i--) {
-				if (cows.get(i).dead) {
-					cows.remove(i);
+				for (int i = cows.size() - 1; i >= 0; i--) {
+					if (cows.get(i).dead) {
+						cows.remove(i);
+					}
+				}
+				for (int i = cows.size() - 1; i >= 0; i--) {
+					if (cows.get(i).dead) {
+						cows.remove(i);
+					}
 				}
 			}
 		}
@@ -157,6 +165,7 @@ public class CowGame extends BasicGame {
 			System.out.println("Belt: " + belt + " Location: " + location);
 			if (activeTile != null && conveyor[location][belt] == null) {
 				conveyor[location][belt] = activeTile;
+				activeTile.setLocation(location, belt);
 				hand.remove(activeTile);
 				activeTile = null;
 			}
@@ -179,6 +188,10 @@ public class CowGame extends BasicGame {
 		switch (key) {
 		case Input.KEY_ESCAPE:
 			quit = true;
+			break;
+		case Input.KEY_SPACE:
+			running = true;
+			hand.clear();
 			break;
 		}
 	}
