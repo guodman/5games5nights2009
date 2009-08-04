@@ -9,6 +9,7 @@ public class Trap {
 	public String name;
 	public Image imgResource;
 	public int states;
+	boolean flipped = false;
 
 	public Trap(int i) {
 		imgResource = CowGame.images.get(i);
@@ -25,22 +26,24 @@ public class Trap {
 	public boolean canBeEnteredRight = true;
 
 	public void actOnEntry(Cow c) {
-		if (c.sanitizeLocation()) {
-			System.out.println("sanitation wasn't necessary.");
-		} else {
-			System.out.println("Sanitation was necessary");
-			System.out.println("Currently at " + c.conveyor + " and location: "
-					+ c.location);
-		}
-		Trap t = CowGame.me.conveyor[c.location][c.conveyor];
-		if (t != null && t != this) {
-			t.actOnEntry(c);
+		if (!flipped) {
+			if (c.sanitizeLocation()) {
+				System.out.println("sanitation wasn't necessary.");
+			} else {
+				System.out.println("Sanitation was necessary");
+				System.out.println("Currently at " + c.conveyor
+						+ " and location: " + c.location);
+			}
+			Trap t = CowGame.me.conveyor[c.location][c.conveyor];
+			if (t != null && t != this) {
+				t.actOnEntry(c);
+			}
 		}
 
 	}
 
 	public void flip() {
-		System.out.println("Error, trap with no defined flip action.");
+		flipped = !flipped;
 	}
 
 	public void update(GameContainer c, int delta) {
@@ -49,6 +52,9 @@ public class Trap {
 
 	public void render(GameContainer c, Graphics g) {
 		g.drawImage(imgResource, x, y);
+		if (flipped) {
+			g.drawString("Flipped", x, y);
+		}
 	}
 
 	public static class Wall extends Trap {
@@ -72,15 +78,20 @@ public class Trap {
 		public Mover(int conveyorChange, int locationChange,
 				boolean skipIntermediateSteps) {
 			super(4);
+
 			this.conveyorChange = conveyorChange;
 			this.locationChange = locationChange;
 			skipIntermediate = skipIntermediateSteps;
+
 		}
 
 		public void actOnEntry(Cow c) {
-			c.conveyor += conveyorChange;
-			c.location += locationChange;
-			super.actOnEntry(c);
+			if (!flipped) {
+				c.conveyor += conveyorChange;
+				c.location += locationChange;
+				super.actOnEntry(c);
+			}
+			flip();
 		}
 	}
 

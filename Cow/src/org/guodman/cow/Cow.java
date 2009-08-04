@@ -51,6 +51,7 @@ public class Cow {
 			conveyor = CowGame.NUMBER_OF_BELTS - 1;
 			result = false;
 		}
+		System.out.println("Cow sanitized into " + conveyor + " and " + location);
 		return result;
 		
 	}
