@@ -33,12 +33,11 @@ public class SmashatronWarsGame extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		// TODO Auto-generated method stub
-		Controllers controllers = new Controllers();
 		try {
-			controllers.create();
-			if (controllers.getControllerCount() > 0) {
-				joystick = controllers.getController(0);
+			Controllers.create();
+			if (Controllers.getControllerCount() > 0) {
+				joystick = Controllers.getController(0);
+				System.out.println("Joystick Name: " + joystick.getName());
 				System.out.println("Joystick has "+joystick.getButtonCount() +" buttons. Its name is "+joystick.getName());
 			} else joystick = null;
 		}
@@ -48,21 +47,18 @@ public class SmashatronWarsGame extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
-		// TODO Auto-generated method stub
-		if (joystick != null) {
-			String joyInfo="Joystick Info: ";
-			for (int i=0; i < joystick.getAxisCount(); i++) {
-				joyInfo += joystick.getAxisValue(i) + " : ";
-			}
-			System.out.println(joyInfo);
-		}
 	}
 
 	@Override
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
-		// TODO Auto-generated method stub
-
+		if (joystick != null) {
+			String joyInfo="Joystick Info: ";
+			for (int i=0; i < joystick.getAxisCount(); i++) {
+				joyInfo += joystick.getAxisValue(i) + " : ";
+			}
+			g.drawString(joyInfo, 10, 25);
+		}
 	}
 
 	public void controllerButtonPressed(final int controller, final int button) {
