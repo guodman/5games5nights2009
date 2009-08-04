@@ -6,11 +6,13 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class SmashatronWarsGame extends BasicGame {
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 768;
+	public static boolean quit;
 
 	/**
 	 * @param args
@@ -47,6 +49,9 @@ public class SmashatronWarsGame extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
+		if(quit) {
+			container.exit();
+		}
 	}
 
 	@Override
@@ -58,6 +63,17 @@ public class SmashatronWarsGame extends BasicGame {
 				joyInfo += joystick.getAxisValue(i) + " : ";
 			}
 			g.drawString(joyInfo, 10, 25);
+		}
+		new Player().render(container,g);
+	}
+	
+	public void keyPressed(int key, char c) {
+		// System.out.println("Someone pressed " + key);
+
+		switch (key) {
+		case Input.KEY_ESCAPE:
+			quit = true;
+			break;
 		}
 	}
 }
