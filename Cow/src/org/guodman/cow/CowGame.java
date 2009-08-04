@@ -15,6 +15,8 @@ import org.newdawn.slick.SlickException;
 public class CowGame extends BasicGame {
 	public static final int WIDTH=1024;
 	public static final int HEIGHT=768;
+	public static final int CONVEYOR_LENGTH = 10;
+	public static final int NUMBER_OF_BELTS = 3;
 	final public static int tileSize = 64;
 	public static final float CONVEYOR_OFFSET_X = 0;
 	public static final float CONVEYOR_OFFSET_Y = 0;
@@ -35,8 +37,6 @@ public class CowGame extends BasicGame {
 		}
 	}
 	
-	public final int CONVEYOR_LENGTH = 10;
-	public final int NUMBER_OF_BELTS = 3;
 	public List<Trap> hand = new ArrayList<Trap>();
 	public List<Trap> deck = new ArrayList<Trap>();
 	public Trap[][] conveyor = new Trap[CONVEYOR_LENGTH][NUMBER_OF_BELTS];
@@ -74,6 +74,9 @@ public class CowGame extends BasicGame {
 			turnCountDown += TURN_TIME;
 			for (Cow c : cows) {
 				c.location++;
+				if (conveyor[c.location][c.conveyor] != null) {
+					conveyor[c.location][c.conveyor].actOnEntry(c);
+				}
 			}
 		}
 	}
