@@ -23,6 +23,7 @@ public class CowGame extends BasicGame {
 	public static boolean quit = false;
 	public static final int TURN_TIME = 2000;
 	public static ArrayList<Image> images;
+	public static CowGame me;
 	
 	/**
 	 * @param args
@@ -50,6 +51,7 @@ public class CowGame extends BasicGame {
 				conveyor[i][j] = null;
 			}
 		}
+		me = this;
 	}
 
 	@Override
