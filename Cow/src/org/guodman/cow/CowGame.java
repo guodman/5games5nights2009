@@ -8,6 +8,7 @@ import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -19,6 +20,7 @@ public class CowGame extends BasicGame {
 	public static final float CONVEYOR_OFFSET_Y = 0;
 	public static boolean quit = false;
 	public static final int TURN_TIME = 2000;
+	public static ArrayList<Image> images;
 	
 	/**
 	 * @param args
@@ -52,6 +54,10 @@ public class CowGame extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		 images = new ArrayList<Image>();
+		 images.add(new Image("/resources/cow.png"));
+		 images.add(new Image("/resources/human.png"));
+		 images.add(new Image("/resources/chute-left.png"));
 		for (int i = 0; i < 3; i++) {
 			cows.add(new Cow(i, 0));
 		}
