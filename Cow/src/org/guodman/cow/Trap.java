@@ -10,33 +10,33 @@ public class Trap {
 	public Image imgResource;
 	public int states;
 
-	public Trap() {
-		imgResource = CowGame.images.get(3);
-		
+	public Trap(int i) {
+		imgResource = CowGame.images.get(i);
+
 	}
-	public Trap setLocation(int location,int conveyor) {
-		x = location*CowGame.tileSize + CowGame.CONVEYOR_OFFSET_X;
-		y = conveyor*CowGame.tileSize + CowGame.CONVEYOR_OFFSET_Y;
+
+	public Trap setLocation(int location, int conveyor) {
+		x = location * CowGame.tileSize + CowGame.CONVEYOR_OFFSET_X;
+		y = conveyor * CowGame.tileSize + CowGame.CONVEYOR_OFFSET_Y;
 		return this;
 	}
-	
-	
 
 	public boolean canBeEnteredLeft = true;
 	public boolean canBeEnteredRight = true;
 
 	public void actOnEntry(Cow c) {
-		if(c.sanitizeLocation()) {
+		if (c.sanitizeLocation()) {
 			System.out.println("sanitation wasn't necessary.");
 		} else {
 			System.out.println("Sanitation was necessary");
-			System.out.println("Currently at " + c.conveyor + " and location: " + c.location);
+			System.out.println("Currently at " + c.conveyor + " and location: "
+					+ c.location);
 		}
 		Trap t = CowGame.me.conveyor[c.location][c.conveyor];
 		if (t != null && t != this) {
 			t.actOnEntry(c);
 		}
-		
+
 	}
 
 	public void flip() {
@@ -51,9 +51,9 @@ public class Trap {
 		g.drawImage(imgResource, x, y);
 	}
 
-
 	public static class Wall extends Trap {
 		public Wall(boolean right) {
+			super(3);
 			if (right) {
 				canBeEnteredRight = false;
 			} else {
@@ -71,6 +71,7 @@ public class Trap {
 
 		public Mover(int conveyorChange, int locationChange,
 				boolean skipIntermediateSteps) {
+			super(4);
 			this.conveyorChange = conveyorChange;
 			this.locationChange = locationChange;
 			skipIntermediate = skipIntermediateSteps;
@@ -82,7 +83,12 @@ public class Trap {
 			super.actOnEntry(c);
 		}
 	}
+
 	public static class Success extends Trap {
+		public Success() {
+			super(5);
+		}
+
 		public void actOnEntry(Cow c) {
 			CowGame.score++;
 			c.dead = true;
@@ -90,7 +96,12 @@ public class Trap {
 			System.out.println("Total score is " + CowGame.score);
 		}
 	}
+
 	public static class Failure extends Trap {
+		public Failure() {
+			super(6);
+		}
+
 		public void actOnEntry(Cow c) {
 			c.dead = true;
 		}

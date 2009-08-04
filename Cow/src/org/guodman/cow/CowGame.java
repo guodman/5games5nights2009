@@ -13,8 +13,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class CowGame extends BasicGame {
-	public static final int WIDTH=1024;
-	public static final int HEIGHT=768;
+	public static final int WIDTH = 1024;
+	public static final int HEIGHT = 768;
 	public static final int CONVEYOR_LENGTH = 10;
 	public static final int NUMBER_OF_BELTS = 3;
 	final public static int tileSize = 64;
@@ -25,7 +25,7 @@ public class CowGame extends BasicGame {
 	public static ArrayList<Image> images;
 	public static CowGame me;
 	public static int score = 0;
-	
+
 	/**
 	 * @param args
 	 */
@@ -38,7 +38,7 @@ public class CowGame extends BasicGame {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public List<Trap> hand = new ArrayList<Trap>();
 	public List<Trap> deck = new ArrayList<Trap>();
 	/**
@@ -62,18 +62,24 @@ public class CowGame extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		container.setAlwaysRender(true);
+
 		images = new ArrayList<Image>();
 		images.add(new Image("/resources/cow.png"));
 		images.add(new Image("/resources/human.png"));
 		images.add(new Image("/resources/trap-chute-left.png"));
 		images.add(new Image("/resources/trap-bird.png"));
+		images.add(new Image("/resources/trap-hose.png"));
+		images.add(new Image("/resources/cow-death.png"));
+		images.add(new Image("/resources/cow-life.png"));
+
 		for (int i = 0; i < 3; i++) {
 			cows.add(new Cow(i, 0));
 		}
-		conveyor[4][1] = new Trap.Mover(1, 1, true).setLocation(4,1);
-		conveyor[8][2] = new Trap.Mover(3, 2, false).setLocation(8,2);
-		for(int i = 0;i<NUMBER_OF_BELTS;i++) {
-			conveyor[CONVEYOR_LENGTH-1][i] = new Trap.Success().setLocation(CONVEYOR_LENGTH-1,i);
+		conveyor[4][1] = new Trap.Mover(1, 1, true).setLocation(4, 1);
+		conveyor[8][2] = new Trap.Mover(3, 2, false).setLocation(8, 2);
+		for (int i = 0; i < NUMBER_OF_BELTS; i++) {
+			conveyor[CONVEYOR_LENGTH - 1][i] = new Trap.Success().setLocation(
+					CONVEYOR_LENGTH - 1, i);
 		}
 		hand.add(new Trap.Mover(-1, 1, false).setLocation(1, NUMBER_OF_BELTS+1));
 		hand.add(new Trap.Mover(1, 3, false).setLocation(3, NUMBER_OF_BELTS+1));
@@ -82,7 +88,7 @@ public class CowGame extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
-		if(quit) {
+		if (quit) {
 			container.exit();
 		}
 		turnCountDown -= delta;
@@ -94,8 +100,8 @@ public class CowGame extends BasicGame {
 					conveyor[c.location][c.conveyor].actOnEntry(c);
 				}
 			}
-			for(int i = cows.size()-1;i>=0;i--) {
-				if(cows.get(i).dead) {
+			for (int i = cows.size() - 1; i >= 0; i--) {
+				if (cows.get(i).dead) {
 					cows.remove(i);
 				}
 			}
@@ -130,16 +136,16 @@ public class CowGame extends BasicGame {
 		// Draw the hand
 		for (Trap t : hand) {
 			t.render(container, g);
-		}
+	}
 	}
 
 	public void mouseMoved(final int oldx, final int oldy, final int newx,
 			final int newy) {
-		
+
 	}
 
 	public void mousePressed(final int button, final int x, final int y) {
-		
+
 	}
 
 	public void mouseReleased(final int button, final int x, final int y) {
@@ -166,8 +172,9 @@ public class CowGame extends BasicGame {
 	}
 
 	public void mouseWheelMoved(final int arg0) {
-		
+
 	}
+
 	public void keyPressed(int key, char c) {
 		switch (key) {
 		case Input.KEY_ESCAPE:
