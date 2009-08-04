@@ -14,6 +14,7 @@ public class SmashatronWarsGame extends BasicGame {
 	public static final int HEIGHT = 768;
 	public static final float SPEED = 5;
 	public static boolean quit;
+	public static SmashatronWarsGame me = null;
 	public Player player;
 
 	/**
@@ -33,6 +34,7 @@ public class SmashatronWarsGame extends BasicGame {
 
 	public SmashatronWarsGame() {
 		super("Smashatron Wars");
+		me = this;
 	}
 
 	@Override
@@ -98,7 +100,7 @@ public class SmashatronWarsGame extends BasicGame {
 			/**
 			 * Sanitize board values
 			 */
-			if()
+			//if()
 		}
 
 	}
