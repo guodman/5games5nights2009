@@ -60,35 +60,4 @@ public class SmashatronWarsGame extends BasicGame {
 			g.drawString(joyInfo, 10, 25);
 		}
 	}
-
-	public void controllerButtonPressed(final int controller, final int button) {
-		System.out.println("Controller: " + controller + " Button: " + button);
-	}
-
-	public void controllerButtonReleased(final int controller, final int button) {
-	}
-
-	public void controllerDownPressed(final int controller) {
-	}
-
-	public void controllerDownReleased(final int controller) {
-	}
-
-	public void controllerLeftPressed(final int controller) {
-	}
-
-	public void controllerLeftReleased(final int controller) {
-	}
-
-	public void controllerRightPressed(final int controller) {
-	}
-
-	public void controllerRightReleased(final int controller) {
-	}
-
-	public void controllerUpPressed(final int controller) {
-	}
-
-	public void controllerUpReleased(final int controller) {
-	}
 }
