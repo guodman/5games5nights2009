@@ -16,7 +16,7 @@ import org.newdawn.slick.SlickException;
 public class SmashatronWarsGame extends BasicGame {
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 768;
-	public static final float SPEED = 5;
+	public static final float SPEED = 0.8f;
 	public static final int ENEMY_DEPLOY_INCREMENT = 1000;
 	public static boolean quit;
 	public static SmashatronWarsGame me = null;

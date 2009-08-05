@@ -1,7 +1,5 @@
 package org.guodman.smashatronwars;
 
-import org.lwjgl.input.Controller;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -22,12 +20,10 @@ public class Player {
 	}
 
 	public void render(GameContainer c, Graphics g) {
-		
 		g.drawImage(resource,x,y);
 	}
 
 	public void update(float x1, float y1, float delta) {
-
 		x += x1 * SmashatronWarsGame.SPEED;
 		y += y1 * SmashatronWarsGame.SPEED;
 
