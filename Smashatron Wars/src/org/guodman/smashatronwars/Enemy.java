@@ -5,13 +5,20 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 public class Enemy {
-	public static final float speed = 0.2f;
+	public static final int SIZE = 30;
+	public static final float SPEED = 0.2f;
 	public float x = 0;
 	public float y = 0;
 	public int strength = 1;
 	
 	public Enemy(int str) {
+		this(str, 0, 0);
+	}
+	
+	public Enemy(int str, int x, int y) {
 		strength = str;
+		this.x = x;
+		this.y = y;
 	}
 	
 	public void init(GameContainer container) {
@@ -23,11 +30,11 @@ public class Enemy {
 		float ydiff = SmashatronWarsGame.me.player.y - y;
 		float theta = (float) Math.atan(xdiff / ydiff);
 		if (SmashatronWarsGame.me.player.y > y) {
-			x += speed * Math.sin(theta);
-			y += speed * Math.cos(theta);
+			x += SPEED * Math.sin(theta);
+			y += SPEED * Math.cos(theta);
 		} else {
-			x -= speed * Math.sin(theta);
-			y -= speed * Math.cos(theta);
+			x -= SPEED * Math.sin(theta);
+			y -= SPEED * Math.cos(theta);
 		}
 	}
 	

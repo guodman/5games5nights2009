@@ -1,5 +1,8 @@
 package org.guodman.smashatronwars;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.input.Controller;
 import org.lwjgl.input.Controllers;
 import org.newdawn.slick.AppGameContainer;
@@ -13,6 +16,7 @@ public class SmashatronWarsGame extends BasicGame {
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 768;
 	public static final float SPEED = 5;
+	public static final int ENEMY_DEPLOY_INCREMENT = 1000;
 	public static boolean quit;
 	public static SmashatronWarsGame me = null;
 	public Player player;
@@ -31,6 +35,8 @@ public class SmashatronWarsGame extends BasicGame {
 	}
 
 	public Controller joystick = null;
+	public List<Enemy> enemies = new ArrayList<Enemy>();
+	public int enemyTime = ENEMY_DEPLOY_INCREMENT;
 
 	public SmashatronWarsGame() {
 		super("Smashatron Wars");
@@ -64,8 +70,21 @@ public class SmashatronWarsGame extends BasicGame {
 		}
 
 		player.update(joystick, delta);
-		
 
+		// add new enemies
+		enemyTime -= delta;
+		if (enemyTime < 0) {
+			enemyTime += ENEMY_DEPLOY_INCREMENT;
+			enemies.add(new Enemy(3, WIDTH / 2, 0));
+			enemies.add(new Enemy(3, WIDTH / 2, HEIGHT - Enemy.SIZE));
+			enemies.add(new Enemy(3, 0, HEIGHT / 2));
+			enemies.add(new Enemy(3, WIDTH - Enemy.SIZE, HEIGHT / 2));
+		}
+
+		for (Enemy e : enemies) {
+			e.update(container, delta);
+		}
+		player.update(joystick, delta);
 	}
 
 	@Override
@@ -77,6 +96,9 @@ public class SmashatronWarsGame extends BasicGame {
 				joyInfo += joystick.getAxisValue(i) + " : ";
 			}
 			g.drawString(joyInfo, 10, 25);
+		}
+		for (Enemy e : enemies) {
+			e.render(container, g);
 		}
 		player.render(container, g);
 	}
