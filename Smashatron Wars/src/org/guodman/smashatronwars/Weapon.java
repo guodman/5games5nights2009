@@ -26,8 +26,8 @@ public abstract class Weapon {
 			if (reloadStatus <= 0 && (x != 0 || y != 0)) {
 				reloadStatus += fireRate;
 				Projectile p = new Projectile(
-						SmashatronWarsGame.me.player.x + 20,
-						SmashatronWarsGame.me.player.y + 5, (float) Math.atan(x / y), 1);
+						SmashatronWarsGame.me.player.getGunX(),
+						SmashatronWarsGame.me.player.getGunY(), (float) Math.atan(x / y), 1);
 				if (y < 0) {
 					p.direction += Math.PI;
 				}
@@ -48,8 +48,8 @@ public abstract class Weapon {
 			if (reloadStatus <= 0 && (x != 0 || y != 0)) {
 				reloadStatus += fireRate;
 				Projectile p = new Projectile(
-						SmashatronWarsGame.me.player.x + 20,
-						SmashatronWarsGame.me.player.y + 5, (float) Math.atan(x / y), 1);
+						SmashatronWarsGame.me.player.getGunX(),
+						SmashatronWarsGame.me.player.getGunY(), (float) Math.atan(x / y), 1);
 				if (y < 0) {
 					p.direction += Math.PI;
 				}

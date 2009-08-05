@@ -8,7 +8,7 @@ public class Player {
 	float x, y;
 	int width, height;
 	Image resource;
-	float previousDir;
+	float previousDir = -90;
 
 	public Player() {
 		x = SmashatronWarsGame.WIDTH / 2 - 15;
@@ -17,6 +17,7 @@ public class Player {
 		width = 30;
 		height = 30;
 		resource = SmashatronWarsGame.images.get(0);
+		resource.rotate(-90);
 	}
 
 	public void render(GameContainer c, Graphics g) {
@@ -41,17 +42,27 @@ public class Player {
 	}
 
 	
-	boolean temp = false;
 	public void setRotation(float direction) {
-		if(!temp) {
-			previousDir = -90;
-			System.out.println("Moving to direction" + direction/Math.PI*180);
+		//if(!temp) {
+			float newDir = (float) (direction/Math.PI*180);
+			//System.out.println("Moving to direction" + newDir);
 		
-		
-			resource.rotate(-(float) (previousDir - (direction/(Math.PI*180))));
-			temp = true;
+		float rotation =  (previousDir - newDir);
+		//System.out.println("Rotating by " + rotation);
+		if(rotation != 0) {
+			resource.rotate(rotation);
+			System.out.println("Rotating by " + rotation);
 		}
-		previousDir = direction;
+		//}
+		previousDir = newDir;
+		System.out.println("New direction is " + previousDir);
+		
+	}
+	public float getGunX() {
+		return (float) (x+width/2+Math.sin(45/180*Math.PI)*15);
+	}
+	public float getGunY() {
+		return (float) (y+width/2-Math.cos(45/180*Math.PI)*15);
 		
 	}
 
