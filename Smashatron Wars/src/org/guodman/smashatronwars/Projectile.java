@@ -26,7 +26,7 @@ public class Projectile {
 		for (Enemy e : SmashatronWarsGame.me.enemies) {
 			float dx = Math.abs(x-e.x);
 			float dy = Math.abs(y-e.y);
-			if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + Enemy.SIZE/2) && !e.dead) {
+			if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + Enemy.SIZE/2) && !e.dead && !dead) {
 				e.dead = true;
 				dead = true;
 			}
