@@ -1,5 +1,8 @@
 package org.guodman.coverfighter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -11,7 +14,9 @@ public class Projectile {
 	 */
 	public float direction;
 	public float speed;
+	public float life = 1250;
 	public boolean dead = false;
+	public List nohits = new ArrayList();
 
 	public Projectile(float x,float y, float direction, float speed) {
 		this.x = x;
@@ -26,10 +31,14 @@ public class Projectile {
 		for (Enemy e : CoverFighterGame.me.enemies) {
 			float dx = Math.abs(x-(e.x+e.SIZE/2));
 			float dy = Math.abs(y-(e.y+e.SIZE/2));
-			if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + Enemy.SIZE/2) && !e.dead && !dead) {
+			if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + Enemy.SIZE/2) && !e.dead && !dead && !nohits.contains(e)) {
 				e.dead = true;
 				dead = true;
 			}
+		}
+		life -= ((float)delta)*speed;
+		if (life < 0) {
+			dead = true;
 		}
 	}
 	public void render(GameContainer c, Graphics g) {

@@ -7,6 +7,8 @@ import org.newdawn.slick.Graphics;
 public class Enemy {
 	public static final int SIZE = 30;
 	public static final float SPEED = 0.1f;
+	public int fireRate = 500;
+	public int reload = fireRate;
 	public float x = 0;
 	public float y = 0;
 	public int strength = 1;
@@ -26,16 +28,20 @@ public class Enemy {
 		
 	}
 	
-	public void update(GameContainer container, int delta) {
+	public void fire() {
 		float xdiff = CoverFighterGame.me.player.x - x;
 		float ydiff = CoverFighterGame.me.player.y - y;
 		float theta = (float) Math.atan(xdiff / ydiff);
-		if (CoverFighterGame.me.player.y > y) {
-			x += SPEED * Math.sin(theta);
-			y += SPEED * Math.cos(theta);
-		} else {
-			x -= SPEED * Math.sin(theta);
-			y -= SPEED * Math.cos(theta);
+		Projectile p = new Projectile(x+SIZE/2, y+SIZE/2, CoverFighterGame.convertToRads(xdiff, ydiff), SPEED*3);
+		p.nohits.add(this);
+		CoverFighterGame.me.projectiles.add(p);
+	}
+	
+	public void update(GameContainer container, int delta) {
+		reload -= delta;
+		if (reload < 0) {
+			reload += fireRate;
+			fire();
 		}
 		float dx = Math.abs(x-CoverFighterGame.me.player.x);
 		float dy = Math.abs(y-CoverFighterGame.me.player.y);
