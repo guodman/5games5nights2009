@@ -6,7 +6,7 @@ import org.newdawn.slick.Graphics;
 
 public class Enemy {
 	public static final int SIZE = 30;
-	public static final float SPEED = 0.2f;
+	public static final float SPEED = 0.1f;
 	public float x = 0;
 	public float y = 0;
 	public int strength = 1;
