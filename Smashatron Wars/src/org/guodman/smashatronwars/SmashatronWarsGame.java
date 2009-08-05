@@ -43,7 +43,7 @@ public class SmashatronWarsGame extends BasicGame {
 	public Controller joystick = null;
 	public List<Enemy> enemies;
 	public int enemyTime = ENEMY_DEPLOY_INCREMENT;
-	public boolean dead = false;
+	public boolean dead;
 	public int score = 0;
 	public Weapon pistol;
 	public Weapon machine = new Weapon.Machine();
@@ -82,6 +82,7 @@ public class SmashatronWarsGame extends BasicGame {
 					+ e.getMessage());
 		}
 		player = new Player();
+		dead = false;
 		pistol = new Weapon.Pistol();
 		machine = new Weapon.Machine();
 		shotty = new Weapon.Shotty();
@@ -232,8 +233,7 @@ public class SmashatronWarsGame extends BasicGame {
 	}
 
 	public void controllerButtonReleased(final int controller, final int button) {
-		System.out.println(button + " was pushed.");
-
+		
 		if (button == pistolButton) {
 			myWeapon = pistol;
 		} else if (button == shottyButton) {
