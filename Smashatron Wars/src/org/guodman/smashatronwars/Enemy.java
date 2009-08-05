@@ -36,6 +36,11 @@ public class Enemy {
 			x -= SPEED * Math.sin(theta);
 			y -= SPEED * Math.cos(theta);
 		}
+		float dx = Math.abs(x-SmashatronWarsGame.me.player.x);
+		float dy = Math.abs(y-SmashatronWarsGame.me.player.y);
+		if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + SmashatronWarsGame.me.player.height/2)) {
+			SmashatronWarsGame.me.dead = true;
+		}
 	}
 	
 	public void render(GameContainer container, Graphics g) {

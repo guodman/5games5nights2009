@@ -38,6 +38,8 @@ public class SmashatronWarsGame extends BasicGame {
 	public Controller joystick = null;
 	public List<Enemy> enemies = new ArrayList<Enemy>();
 	public int enemyTime = ENEMY_DEPLOY_INCREMENT;
+	public boolean dead = false;
+	public int score = 0;
 
 	public SmashatronWarsGame() {
 		super("Smashatron Wars");
@@ -70,80 +72,85 @@ public class SmashatronWarsGame extends BasicGame {
 		if (quit) {
 			container.exit();
 		}
-		float x1, y1, x2, y2;
 
-		if (joystick != null) {
+		if (!dead) {
+			float x1, y1, x2, y2;
 
-			switch (joystick.getAxisCount()) {
-			// Dougbert controller
-			case 4:
-				x1 = joystick.getAxisValue(0);
-				y1 = joystick.getAxisValue(1);
-				x2 = joystick.getAxisValue(2);
-				y2 = joystick.getAxisValue(3);
-				break;
+			if (joystick != null) {
 
-			// Xbox controller
-			case 7:
-				x1 = joystick.getAxisValue(1);
-				y1 = joystick.getAxisValue(2);
-				x2 = joystick.getAxisValue(4);
-				y2 = joystick.getAxisValue(5);
+				switch (joystick.getAxisCount()) {
+				// Dougbert controller
+				case 4:
+					x1 = joystick.getAxisValue(0);
+					y1 = joystick.getAxisValue(1);
+					x2 = joystick.getAxisValue(2);
+					y2 = joystick.getAxisValue(3);
+					break;
 
-				break;
+				// Xbox controller
+				case 7:
+					x1 = joystick.getAxisValue(1);
+					y1 = joystick.getAxisValue(2);
+					x2 = joystick.getAxisValue(4);
+					y2 = joystick.getAxisValue(5);
 
-			default:
-				x1 = x2 = y1 = y2 = 0;
+					break;
+
+				default:
+					x1 = x2 = y1 = y2 = 0;
+				}
+				/**
+				 * Sanitize close to zero values.
+				 */
+				double tolerance = 0.14;
+				if (Math.abs(x1) < tolerance)
+					x1 = 0;
+				if (Math.abs(x2) < tolerance)
+					x2 = 0;
+				if (Math.abs(y1) < tolerance)
+					y1 = 0;
+				if (Math.abs(y2) < tolerance)
+					y2 = 0;
+
+				player.update(x1, y1, delta);
+				spawnProjectiles(x2, y2, delta);
 			}
-			/**
-			 * Sanitize close to zero values.
-			 */
-			double tolerance = 0.14;
-			if (Math.abs(x1) < tolerance)
-				x1 = 0;
-			if (Math.abs(x2) < tolerance)
-				x2 = 0;
-			if (Math.abs(y1) < tolerance)
-				y1 = 0;
-			if (Math.abs(y2) < tolerance)
-				y2 = 0;
-			
-			player.update(x1, y1, delta);
-			spawnProjectiles(x2, y2, delta);
-		}
 
+			// add new enemies
+			enemyTime -= delta;
+			if (enemyTime < 0) {
+				enemyTime += ENEMY_DEPLOY_INCREMENT;
+				enemies.add(new Enemy(3, WIDTH / 2, 0));
+				enemies.add(new Enemy(3, WIDTH / 2, HEIGHT - Enemy.SIZE));
+				enemies.add(new Enemy(3, 0, HEIGHT / 2));
+				enemies.add(new Enemy(3, WIDTH - Enemy.SIZE, HEIGHT / 2));
+			}
 
-		// add new enemies
-		enemyTime -= delta;
-		if (enemyTime < 0) {
-			enemyTime += ENEMY_DEPLOY_INCREMENT;
-			enemies.add(new Enemy(3, WIDTH / 2, 0));
-			enemies.add(new Enemy(3, WIDTH / 2, HEIGHT - Enemy.SIZE));
-			enemies.add(new Enemy(3, 0, HEIGHT / 2));
-			enemies.add(new Enemy(3, WIDTH - Enemy.SIZE, HEIGHT / 2));
-		}
+			for (Enemy e : enemies) {
+				e.update(container, delta);
+			}
+			for (Projectile p : projectiles) {
+				p.update(container, delta);
+			}
 
-		for (Enemy e : enemies) {
-			e.update(container, delta);
-		}
-		for (Projectile p : projectiles) {
-			p.update(container, delta);
-		}
-		
-		// Remove projectiles that have left the screen.
-		for (int i = projectiles.size()-1;i>=0;i--) {
-			Projectile remover = projectiles.get(i);
-			if(remover.x < 0 ||remover.y < 0 || remover.x > WIDTH || remover.y > HEIGHT) {
-				projectiles.remove(i);
+			// Remove projectiles that have left the screen.
+			for (int i = projectiles.size() - 1; i >= 0; i--) {
+				Projectile remover = projectiles.get(i);
+				if (remover.x < 0 || remover.y < 0 || remover.x > WIDTH
+						|| remover.y > HEIGHT) {
+					projectiles.remove(i);
+				}
 			}
 		}
 
 	}
 
-	private void spawnProjectiles(float x,float y, int delta) {
-		if(x!= 0 || y!=0) {
-			Projectile p = new Projectile(player.x, player.y,(float) (Math.atan(x/-y)/Math.PI* 180f), 1);
-	
+	private void spawnProjectiles(float x, float y, int delta) {
+		if (x != 0 || y != 0) {
+			Projectile p = new Projectile(player.x, player.y, (float) (Math
+					.atan(x / -y)
+					/ Math.PI * 180f), 1);
+
 			projectiles.add(p);
 		}
 	}
@@ -151,6 +158,13 @@ public class SmashatronWarsGame extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
+		for (Enemy e : enemies) {
+			e.render(container, g);
+		}
+		player.render(container, g);
+		for (Projectile p : projectiles) {
+			p.render(container, g);
+		}
 		if (joystick != null) {
 			String joyInfo = "Joystick Info: ";
 			for (int i = 0; i < joystick.getAxisCount(); i++) {
@@ -158,14 +172,7 @@ public class SmashatronWarsGame extends BasicGame {
 			}
 			g.drawString(joyInfo, 10, 25);
 		}
-		for (Enemy e : enemies) {
-			e.render(container, g);
-		}
-		player.render(container, g);
-		for(Projectile p : projectiles) {
-			p.render(container,g);
-			
-		}
+		g.drawString("Dead Status is " + dead, 10, 40);
 	}
 
 	public void keyPressed(int key, char c) {
