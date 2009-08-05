@@ -6,6 +6,9 @@ import org.newdawn.slick.Graphics;
 public class Projectile {
 	public static final int SIZE = 3;
 	public float x, y;
+	/**
+	 * Direction is in Radians
+	 */
 	public float direction;
 	public float speed;
 	public boolean dead = false;
