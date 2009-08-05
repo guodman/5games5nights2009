@@ -118,9 +118,9 @@ public class SmashatronWarsGame extends BasicGame {
 					y1 = joystick.getAxisValue(2);
 					x2 = joystick.getAxisValue(4);
 					y2 = joystick.getAxisValue(5);
-					pistolButton = 4;
-					shottyButton = 2;
-					machineButton = 3;
+					pistolButton = 2;
+					shottyButton = 3;
+					machineButton = 4;
 					break;
 
 				default:
@@ -236,23 +236,21 @@ public class SmashatronWarsGame extends BasicGame {
 	}
 
 	public void controllerButtonReleased(final int controller, final int button) {
+		System.out.println(button + " was pushed.");
 
-		switch (button) {
-		case 1:
-			if (button == pistolButton) {
-				myWeapon = pistol;
-			} else if (button == shottyButton) {
-				if (myWeapon != shotty) {
-					myWeapon = shotty;
-				} else {
-					shotty.ammo += 10;
-				}
-			} else if (button == machineButton) {
-				if (myWeapon != machine) {
-					myWeapon = machine;
-				} else {
-					machine.ammo += 50;
-				}
+		if (button == pistolButton) {
+			myWeapon = pistol;
+		} else if (button == shottyButton) {
+			if (myWeapon != shotty) {
+				myWeapon = shotty;
+			} else {
+				shotty.ammo += 10;
+			}
+		} else if (button == machineButton) {
+			if (myWeapon != machine) {
+				myWeapon = machine;
+			} else {
+				machine.ammo += 50;
 			}
 		}
 	}
