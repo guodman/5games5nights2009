@@ -18,7 +18,7 @@ public class Player {
 		y = SmashatronWarsGame.HEIGHT / 2 - 15;
 
 		width = 30;
-		height = 30;
+		height = 20;
 		resource = SmashatronWarsGame.images.get(0);
 		resource.rotate(-90);
 	}
