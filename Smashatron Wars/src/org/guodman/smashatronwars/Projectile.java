@@ -21,8 +21,8 @@ public class Projectile {
 	}
 	
 	public void update(GameContainer c, int delta) {
-		x+= Math.sin(direction)*(float)SmashatronWarsGame.SPEED*speed;
-		y+= Math.cos(direction)*(float)SmashatronWarsGame.SPEED*speed;
+		x+= Math.sin(direction)*(float)SmashatronWarsGame.SPEED*speed*delta;
+		y+= Math.cos(direction)*(float)SmashatronWarsGame.SPEED*speed*delta;
 		for (Enemy e : SmashatronWarsGame.me.enemies) {
 			float dx = Math.abs(x-(e.x+e.SIZE/2));
 			float dy = Math.abs(y-(e.y+e.SIZE/2));

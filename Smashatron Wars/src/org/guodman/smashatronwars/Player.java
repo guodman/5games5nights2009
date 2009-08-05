@@ -28,8 +28,8 @@ public class Player {
 	}
 
 	public void update(float x1, float y1, float delta) {
-		x += x1 * SmashatronWarsGame.SPEED;
-		y += y1 * SmashatronWarsGame.SPEED;
+		x += x1 * SmashatronWarsGame.SPEED*delta;
+		y += y1 * SmashatronWarsGame.SPEED*delta;
 
 		/**
 		 * Sanitize board values
