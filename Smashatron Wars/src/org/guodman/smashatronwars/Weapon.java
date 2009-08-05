@@ -78,6 +78,7 @@ public abstract class Weapon {
 					SmashatronWarsGame.me.player.setRotation(p.direction);
 					SmashatronWarsGame.me.projectiles.add(p);
 				}
+				ammo -= 1;
 			}
 		}
 	}
