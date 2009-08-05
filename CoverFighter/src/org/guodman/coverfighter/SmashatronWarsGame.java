@@ -1,4 +1,4 @@
-package org.guodman.smashatronwars;
+package org.guodman.coverfighter;
 
 import java.util.ArrayList;
 import java.util.List;

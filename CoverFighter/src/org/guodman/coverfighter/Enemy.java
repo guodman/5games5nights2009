@@ -1,4 +1,4 @@
-package org.guodman.smashatronwars;
+package org.guodman.coverfighter;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

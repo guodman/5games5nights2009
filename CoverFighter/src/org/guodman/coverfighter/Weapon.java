@@ -1,4 +1,4 @@
-package org.guodman.smashatronwars;
+package org.guodman.coverfighter;
 
 public abstract class Weapon {
 	public final int fireRate;
