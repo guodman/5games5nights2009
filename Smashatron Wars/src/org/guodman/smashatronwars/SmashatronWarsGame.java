@@ -69,7 +69,7 @@ public class SmashatronWarsGame extends BasicGame {
 		}
 		player = new Player();
 		container.setAlwaysRender(true);
-		myWeapon = new Weapon.Machine();
+		myWeapon = new Weapon.Pistol();
 	}
 
 	@Override
@@ -144,7 +144,7 @@ public class SmashatronWarsGame extends BasicGame {
 			for (int i = projectiles.size() - 1; i >= 0; i--) {
 				Projectile remover = projectiles.get(i);
 				if (remover.x < 0 || remover.y < 0 || remover.x > WIDTH
-						|| remover.y > HEIGHT) {
+						|| remover.y > HEIGHT || remover.dead) {
 					projectiles.remove(i);
 				}
 			}

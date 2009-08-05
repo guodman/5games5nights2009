@@ -1,8 +1,5 @@
 package org.guodman.smashatronwars;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class Weapon {
 	public final int fireRate;
 	public int reloadStatus;

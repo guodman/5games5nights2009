@@ -8,6 +8,7 @@ public class Projectile {
 	public float x, y;
 	public float direction;
 	public float speed;
+	public boolean dead = false;
 
 	public Projectile(float x,float y, float direction, float speed) {
 		this.x = x;
@@ -22,8 +23,9 @@ public class Projectile {
 		for (Enemy e : SmashatronWarsGame.me.enemies) {
 			float dx = Math.abs(x-e.x);
 			float dy = Math.abs(y-e.y);
-			if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + Enemy.SIZE/2)) {
+			if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + Enemy.SIZE/2) && !e.dead) {
 				e.dead = true;
+				dead = true;
 			}
 		}
 	}
