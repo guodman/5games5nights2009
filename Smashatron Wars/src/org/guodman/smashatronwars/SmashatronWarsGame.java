@@ -41,11 +41,11 @@ public class SmashatronWarsGame extends BasicGame {
 	}
 
 	public Controller joystick = null;
-	public List<Enemy> enemies = new ArrayList<Enemy>();
+	public List<Enemy> enemies;
 	public int enemyTime = ENEMY_DEPLOY_INCREMENT;
 	public boolean dead = false;
 	public int score = 0;
-	public Weapon pistol = new Weapon.Pistol();
+	public Weapon pistol;
 	public Weapon machine = new Weapon.Machine();
 	public Weapon shotty = new Weapon.Shotty();
 	public Weapon myWeapon = shotty;
@@ -57,8 +57,16 @@ public class SmashatronWarsGame extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		container.setAlwaysRender(true);
+
+		startGame();
+
+	}
+
+	public void startGame() throws SlickException {
 		projectiles = new ArrayList<Projectile>();
 		images = new ArrayList<Image>();
+		enemies = new ArrayList<Enemy>();
 		images.add(new Image("/resources/shooter.png"));
 		try {
 			Controllers.create();
@@ -74,7 +82,10 @@ public class SmashatronWarsGame extends BasicGame {
 					+ e.getMessage());
 		}
 		player = new Player();
-		container.setAlwaysRender(true);
+		pistol = new Weapon.Pistol();
+		machine = new Weapon.Machine();
+		shotty = new Weapon.Shotty();
+		myWeapon = shotty;
 	}
 
 	@Override
@@ -197,6 +208,13 @@ public class SmashatronWarsGame extends BasicGame {
 		case Input.KEY_ESCAPE:
 			quit = true;
 			break;
+		case Input.KEY_SPACE:
+			try {
+				startGame();
+			} catch (SlickException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -218,19 +236,23 @@ public class SmashatronWarsGame extends BasicGame {
 	}
 
 	public void controllerButtonReleased(final int controller, final int button) {
-		if (button == pistolButton) {
-			myWeapon = pistol;
-		} else if (button == shottyButton) {
-			if (myWeapon != shotty) {
-				myWeapon = shotty;
-			} else {
-				shotty.ammo += 10;
-			}
-		} else if (button == machineButton) {
-			if (myWeapon != machine) {
-				myWeapon = machine;
-			} else {
-				machine.ammo += 50;
+
+		switch (button) {
+		case 1:
+			if (button == pistolButton) {
+				myWeapon = pistol;
+			} else if (button == shottyButton) {
+				if (myWeapon != shotty) {
+					myWeapon = shotty;
+				} else {
+					shotty.ammo += 10;
+				}
+			} else if (button == machineButton) {
+				if (myWeapon != machine) {
+					myWeapon = machine;
+				} else {
+					machine.ammo += 50;
+				}
 			}
 		}
 	}
