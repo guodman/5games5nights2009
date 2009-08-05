@@ -23,6 +23,9 @@ public class SmashatronWarsGame extends BasicGame {
 	public Player player;
 	public ArrayList<Projectile> projectiles;
 	public static ArrayList<Image> images;
+	public static int pistolButton;
+	public static int machineButton;
+	public static int shottyButton;
 
 	/**
 	 * @param args
@@ -93,6 +96,9 @@ public class SmashatronWarsGame extends BasicGame {
 					y1 = joystick.getAxisValue(1);
 					x2 = joystick.getAxisValue(2);
 					y2 = joystick.getAxisValue(3);
+					pistolButton = 1;
+					shottyButton = 2;
+					machineButton = 3;
 					break;
 
 				// Xbox controller
@@ -101,7 +107,9 @@ public class SmashatronWarsGame extends BasicGame {
 					y1 = joystick.getAxisValue(2);
 					x2 = joystick.getAxisValue(4);
 					y2 = joystick.getAxisValue(5);
-
+					pistolButton = 4;
+					shottyButton = 2;
+					machineButton = 3;
 					break;
 
 				default:
@@ -155,6 +163,7 @@ public class SmashatronWarsGame extends BasicGame {
 			for (int i = enemies.size() - 1; i >= 0; i--) {
 				if (enemies.get(i).dead) {
 					enemies.remove(i);
+					score++;
 				}
 			}
 		}
@@ -190,13 +199,15 @@ public class SmashatronWarsGame extends BasicGame {
 			break;
 		}
 	}
+
 	/**
 	 * Returns the radial location from 0,0 of the point.
+	 * 
 	 * @param x
 	 * @param y
 	 */
 	public static float convertToRads(float x, float y) {
-		float direction = (float)Math.atan(x / y);
+		float direction = (float) Math.atan(x / y);
 		if (y < 0) {
 			direction += Math.PI;
 		}
@@ -207,24 +218,20 @@ public class SmashatronWarsGame extends BasicGame {
 	}
 
 	public void controllerButtonReleased(final int controller, final int button) {
-		switch (button) {
-			case 1:
-				myWeapon = pistol;
-				break;
-			case 2:
-				if (myWeapon != shotty) {
-					myWeapon = shotty;
-				} else {
-					shotty.ammo += 10;
-				}
-				break;
-			case 3:
-				if (myWeapon != machine) {
-					myWeapon = machine;
-				} else {
-					machine.ammo += 50;
-				}
-				break;
+		if (button == pistolButton) {
+			myWeapon = pistol;
+		} else if (button == shottyButton) {
+			if (myWeapon != shotty) {
+				myWeapon = shotty;
+			} else {
+				shotty.ammo += 10;
+			}
+		} else if (button == machineButton) {
+			if (myWeapon != machine) {
+				myWeapon = machine;
+			} else {
+				machine.ammo += 50;
+			}
 		}
 	}
 }
