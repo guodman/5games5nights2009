@@ -207,5 +207,24 @@ public class SmashatronWarsGame extends BasicGame {
 	}
 
 	public void controllerButtonReleased(final int controller, final int button) {
+		switch (button) {
+			case 1:
+				myWeapon = pistol;
+				break;
+			case 2:
+				if (myWeapon != shotty) {
+					myWeapon = shotty;
+				} else {
+					shotty.ammo += 10;
+				}
+				break;
+			case 3:
+				if (myWeapon != machine) {
+					myWeapon = machine;
+				} else {
+					machine.ammo += 50;
+				}
+				break;
+		}
 	}
 }
