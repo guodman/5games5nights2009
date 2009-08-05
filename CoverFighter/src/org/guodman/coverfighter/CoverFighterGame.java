@@ -167,8 +167,8 @@ public class CoverFighterGame extends BasicGame {
 			// Remove projectiles that have left the screen.
 			for (int i = projectiles.size() - 1; i >= 0; i--) {
 				Projectile remover = projectiles.get(i);
-				if (remover.x < 0 || remover.y < 0 || remover.x > WIDTH
-						|| remover.y > HEIGHT || remover.dead) {
+				if (remover.mapx < 0 || remover.mapy < 0 || remover.mapx > WIDTH
+						|| remover.mapy > HEIGHT || remover.dead) {
 					projectiles.remove(i);
 				}
 			}

@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class Player {
-	float x, y;
+	float mapx, mapy;
 	int width, height;
 	Image resource;
 	/**
@@ -14,8 +14,8 @@ public class Player {
 	float previousDir = -90;
 
 	public Player() {
-		x = CoverFighterGame.WIDTH / 2 - 15;
-		y = CoverFighterGame.HEIGHT / 2 - 15;
+		mapx = CoverFighterGame.WIDTH / 2 - 15;
+		mapy = CoverFighterGame.HEIGHT / 2 - 15;
 
 		width = 30;
 		height = 20;
@@ -24,24 +24,24 @@ public class Player {
 	}
 
 	public void render(GameContainer c, Graphics g) {
-		g.drawImage(resource,x,y);
+		g.drawImage(resource,mapx,mapy);
 	}
 
 	public void update(float x1, float y1, float delta) {
-		x += x1 * CoverFighterGame.SPEED;
-		y += y1 * CoverFighterGame.SPEED;
+		mapx += x1 * CoverFighterGame.SPEED;
+		mapy += y1 * CoverFighterGame.SPEED;
 
 		/**
 		 * Sanitize board values
 		 */
-		if (x < 0)
-			x = 0;
-		if (y < 0)
-			y = 0;
-		if (y > (CoverFighterGame.HEIGHT - width))
-			y = (CoverFighterGame.HEIGHT - width);
-		if (x > (CoverFighterGame.WIDTH - height))
-			x = (CoverFighterGame.WIDTH - height);
+		if (mapx < 0)
+			mapx = 0;
+		if (mapy < 0)
+			mapy = 0;
+		if (mapy > (CoverFighterGame.HEIGHT - width))
+			mapy = (CoverFighterGame.HEIGHT - width);
+		if (mapx > (CoverFighterGame.WIDTH - height))
+			mapx = (CoverFighterGame.WIDTH - height);
 	}
 
 	
@@ -63,16 +63,16 @@ public class Player {
 	}
 	public float getGunX() {
 		float result = (float) (width/2f+Math.sin((360-previousDir-135f)/180f*Math.PI)*10f);
-		System.out.println("Gun location is " + result + " and x is " + x);
-		result += x;
+		System.out.println("Gun location is " + result + " and mapx is " + mapx);
+		result += mapx;
 		
 		return result;
 		
 	}
 	public float getGunY() {
 		float result = (float) (height/2f-Math.cos((360-previousDir-135f)/180f*Math.PI)*10f);
-		System.out.println("Gun location is " + result + " and y is " + x);
-		result += y;
+		System.out.println("Gun location is " + result + " and mapy is " + mapx);
+		result += mapy;
 		return result;
 		
 	}
