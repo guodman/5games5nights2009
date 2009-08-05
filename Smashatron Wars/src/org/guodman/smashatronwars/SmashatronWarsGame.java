@@ -142,15 +142,16 @@ public class SmashatronWarsGame extends BasicGame {
 				}
 			}
 		}
-
 	}
 
 	private void spawnProjectiles(float x, float y, int delta) {
 		if (x != 0 || y != 0) {
-			Projectile p = new Projectile(player.x, player.y, (float) (Math
-					.atan(x / -y)
-					/ Math.PI * 180f), 1);
-
+			Projectile p = new Projectile(player.x, player.y, (float) Math
+					.atan(x / y), 1);
+			System.out.println("Atan of " + x + " and " + y + " is "
+					+ Math.atan(x / y));
+			if (y < 0)
+				p.direction += Math.PI;
 			projectiles.add(p);
 		}
 	}
