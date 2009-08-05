@@ -42,7 +42,7 @@ public abstract class Weapon {
 
 		@Override
 		public void fire(float x, float y, int delta) {
-			if (reloadStatus <= 0 && (x != 0 || y != 0)) {
+			if (reloadStatus <= 0 && ammo > 0 && (x != 0 || y != 0)) {
 				reloadStatus += fireRate;
 				Projectile p = new Projectile(
 						SmashatronWarsGame.me.player.getGunX(),
@@ -60,11 +60,12 @@ public abstract class Weapon {
 	public static class Shotty extends Weapon {
 		public Shotty() {
 			super(250);
+			ammo = 50;
 		}
 
 		@Override
 		public void fire(float x, float y, int delta) {
-			if (reloadStatus <= 0 && (x != 0 || y != 0)) {
+			if (reloadStatus <= 0 && ammo > 0 && (x != 0 || y != 0)) {
 				for (int i = 0; i < 8; i++) {
 					reloadStatus += fireRate;
 					Projectile p = new Projectile(
