@@ -42,7 +42,10 @@ public class SmashatronWarsGame extends BasicGame {
 	public int enemyTime = ENEMY_DEPLOY_INCREMENT;
 	public boolean dead = false;
 	public int score = 0;
-	public Weapon myWeapon = null;
+	public Weapon pistol = new Weapon.Pistol();
+	public Weapon machine = new Weapon.Machine();
+	public Weapon shotty = new Weapon.Shotty();
+	public Weapon myWeapon = shotty;
 
 	public SmashatronWarsGame() {
 		super("Smashatron Wars");
@@ -69,7 +72,6 @@ public class SmashatronWarsGame extends BasicGame {
 		}
 		player = new Player();
 		container.setAlwaysRender(true);
-		myWeapon = new Weapon.Shotty();
 	}
 
 	@Override
@@ -119,7 +121,9 @@ public class SmashatronWarsGame extends BasicGame {
 					y2 = 0;
 
 				player.update(x1, y1, delta);
-				myWeapon.reloadStatus -= delta;
+				if (myWeapon.reloadStatus > 0) {
+					myWeapon.reloadStatus -= delta;
+				}
 				myWeapon.fire(x2, y2, delta);
 			}
 
@@ -173,7 +177,8 @@ public class SmashatronWarsGame extends BasicGame {
 			}
 			g.drawString(joyInfo, 10, 25);
 		}
-		g.drawString("Dead Status is " + dead, 10, 40);
+		g.drawString("Shotgun Ammo: " + shotty.ammo, 10, 40);
+		g.drawString("Machine Gun Ammo: " + machine.ammo, 10, 55);
 	}
 
 	public void keyPressed(int key, char c) {
@@ -196,5 +201,11 @@ public class SmashatronWarsGame extends BasicGame {
 			direction += Math.PI;
 		}
 		return direction;
+	}
+
+	public void controllerButtonPressed(final int controller, final int button) {
+	}
+
+	public void controllerButtonReleased(final int controller, final int button) {
 	}
 }

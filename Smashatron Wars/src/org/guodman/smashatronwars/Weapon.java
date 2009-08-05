@@ -22,14 +22,7 @@ public abstract class Weapon {
 		public void fire(float x, float y, int delta) {
 			if (reloadStatus <= 0 && (x != 0 || y != 0)) {
 				reloadStatus += fireRate;
-				Projectile p = new Projectile(
-						SmashatronWarsGame.me.player.getGunX(),
-						SmashatronWarsGame.me.player.getGunY(), (float) Math.atan(x / y), 1);
-				if (y < 0) {
-					p.direction += Math.PI;
-				}
-				SmashatronWarsGame.me.player.setRotation(p.direction);
-				SmashatronWarsGame.me.projectiles.add(p);
+				SmashatronWarsGame.me.player.makeProjectile(x, y);
 			}
 		}
 	}
@@ -44,14 +37,7 @@ public abstract class Weapon {
 		public void fire(float x, float y, int delta) {
 			if (reloadStatus <= 0 && ammo > 0 && (x != 0 || y != 0)) {
 				reloadStatus += fireRate;
-				Projectile p = new Projectile(
-						SmashatronWarsGame.me.player.getGunX(),
-						SmashatronWarsGame.me.player.getGunY(), (float) Math.atan(x / y), 1);
-				if (y < 0) {
-					p.direction += Math.PI;
-				}
-				SmashatronWarsGame.me.player.setRotation(p.direction);
-				SmashatronWarsGame.me.projectiles.add(p);
+				SmashatronWarsGame.me.player.makeProjectile(x, y);
 				ammo -= 1;
 			}
 		}
@@ -59,24 +45,16 @@ public abstract class Weapon {
 
 	public static class Shotty extends Weapon {
 		public Shotty() {
-			super(250);
+			super(150);
 			ammo = 50;
 		}
 
 		@Override
 		public void fire(float x, float y, int delta) {
 			if (reloadStatus <= 0 && ammo > 0 && (x != 0 || y != 0)) {
+				reloadStatus += fireRate;
 				for (int i = 0; i < 8; i++) {
-					reloadStatus += fireRate;
-					Projectile p = new Projectile(
-							SmashatronWarsGame.me.player.getGunX(),
-							SmashatronWarsGame.me.player.getGunY(), (float) Math.atan(x / y), 1);
-					if (y < 0) {
-						p.direction += Math.PI;
-					}
-					p.direction += Math.random()*Math.PI/12 - Math.PI/6;
-					SmashatronWarsGame.me.player.setRotation(p.direction);
-					SmashatronWarsGame.me.projectiles.add(p);
+					SmashatronWarsGame.me.player.makeProjectile(x, y).direction += Math.random()*Math.PI/12 - Math.PI/6;
 				}
 				ammo -= 1;
 			}
