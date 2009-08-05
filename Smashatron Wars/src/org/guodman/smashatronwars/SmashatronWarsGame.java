@@ -20,6 +20,7 @@ public class SmashatronWarsGame extends BasicGame {
 	public static boolean quit;
 	public static SmashatronWarsGame me = null;
 	public Player player;
+	public ArrayList<Projectile> projectiles;
 
 	/**
 	 * @param args
@@ -45,6 +46,7 @@ public class SmashatronWarsGame extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		projectiles = new ArrayList<Projectile>();
 		try {
 			Controllers.create();
 			if (Controllers.getControllerCount() > 0) {
@@ -68,8 +70,48 @@ public class SmashatronWarsGame extends BasicGame {
 		if (quit) {
 			container.exit();
 		}
+		float x1, y1, x2, y2;
 
-		player.update(joystick, delta);
+		if (joystick != null) {
+
+			switch (joystick.getAxisCount()) {
+			// Dougbert controller
+			case 4:
+				x1 = joystick.getAxisValue(0);
+				y1 = joystick.getAxisValue(1);
+				x2 = joystick.getAxisValue(2);
+				y2 = joystick.getAxisValue(3);
+				break;
+
+			// Xbox controller
+			case 7:
+				x1 = joystick.getAxisValue(1);
+				y1 = joystick.getAxisValue(2);
+				x2 = joystick.getAxisValue(4);
+				y2 = joystick.getAxisValue(5);
+
+				break;
+
+			default:
+				x1 = x2 = y1 = y2 = 0;
+			}
+			/**
+			 * Sanitize close to zero values.
+			 */
+			double tolerance = 0.14;
+			if (Math.abs(x1) < tolerance)
+				x1 = 0;
+			if (Math.abs(x2) < tolerance)
+				x2 = 0;
+			if (Math.abs(y1) < tolerance)
+				y1 = 0;
+			if (Math.abs(y2) < tolerance)
+				y2 = 0;
+			
+			player.update(x1, y1, delta);
+			spawnProjectiles(x2, y2, delta);
+		}
+
 
 		// add new enemies
 		enemyTime -= delta;
@@ -84,7 +126,26 @@ public class SmashatronWarsGame extends BasicGame {
 		for (Enemy e : enemies) {
 			e.update(container, delta);
 		}
-		player.update(joystick, delta);
+		for (Projectile p : projectiles) {
+			p.update(container, delta);
+		}
+		
+		// Remove projectiles that have left the screen.
+		for (int i = projectiles.size()-1;i>=0;i--) {
+			Projectile remover = projectiles.get(i);
+			if(remover.x < 0 ||remover.y < 0 || remover.x > WIDTH || remover.y > HEIGHT) {
+				projectiles.remove(i);
+			}
+		}
+
+	}
+
+	private void spawnProjectiles(float x,float y, int delta) {
+		if(x!= 0 || y!=0) {
+			Projectile p = new Projectile(player.x, player.y,(float) (Math.atan(x/-y)/Math.PI* 180f), 1);
+	
+			projectiles.add(p);
+		}
 	}
 
 	@Override
@@ -101,6 +162,10 @@ public class SmashatronWarsGame extends BasicGame {
 			e.render(container, g);
 		}
 		player.render(container, g);
+		for(Projectile p : projectiles) {
+			p.render(container,g);
+			
+		}
 	}
 
 	public void keyPressed(int key, char c) {

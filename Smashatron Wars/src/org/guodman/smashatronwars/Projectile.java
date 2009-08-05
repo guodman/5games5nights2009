@@ -8,9 +8,17 @@ public class Projectile {
 	public float direction;
 	public float speed;
 
+	public Projectile(float x,float y, float direction, float speed) {
+		this.x = x;
+		this.y = y;
+		this.direction = direction;
+		this.speed = speed;
+	}
+	
 	public void update(GameContainer c, int delta) {
-		x+= Math.cos(direction/180*Math.PI)*SmashatronWarsGame.SPEED*speed;
-		y-= Math.cos(direction/180*Math.PI)*SmashatronWarsGame.SPEED*speed;
+		x+= Math.sin(direction/180f*Math.PI)*(float)SmashatronWarsGame.SPEED*speed;
+		y-= Math.cos(direction/180f*Math.PI)*(float)SmashatronWarsGame.SPEED*speed;
+		System.out.println("updating a projectile. direction is " + direction + "speed is " + speed);
 	}
 	public void render(GameContainer c, Graphics g) {
 		g.drawOval(x,y,3,3);
