@@ -8,7 +8,7 @@ public class Enemy {
 	public static final int SIZE = 30;
 	public static final float SPEED = 0.1f;
 	public int fireRate = 500;
-	public int reload = fireRate;
+	public int reload;
 	public float x = 0;
 	public float y = 0;
 	public int strength = 1;
@@ -22,6 +22,8 @@ public class Enemy {
 		strength = str;
 		this.x = x;
 		this.y = y;
+		//TODO: this might not be actually working
+		reload = (int) (Math.random()*(float)fireRate);
 	}
 	
 	public void init(GameContainer container) {
