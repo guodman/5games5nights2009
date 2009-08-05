@@ -42,6 +42,7 @@ public class SmashatronWarsGame extends BasicGame {
 	public int enemyTime = ENEMY_DEPLOY_INCREMENT;
 	public boolean dead = false;
 	public int score = 0;
+	public Weapon myWeapon = null;
 
 	public SmashatronWarsGame() {
 		super("Smashatron Wars");
@@ -68,6 +69,7 @@ public class SmashatronWarsGame extends BasicGame {
 		}
 		player = new Player();
 		container.setAlwaysRender(true);
+		myWeapon = new Weapon.Pistol();
 	}
 
 	@Override
@@ -117,7 +119,8 @@ public class SmashatronWarsGame extends BasicGame {
 					y2 = 0;
 
 				player.update(x1, y1, delta);
-				spawnProjectiles(x2, y2, delta);
+				myWeapon.reloadStatus -= delta;
+				myWeapon.fire(x2, y2, delta);
 			}
 
 			// add new enemies
@@ -150,20 +153,6 @@ public class SmashatronWarsGame extends BasicGame {
 					enemies.remove(i);
 				}
 			}
-		}
-	}
-
-	private void spawnProjectiles(float x, float y, int delta) {
-		if (x != 0 || y != 0) {
-			Projectile p = new Projectile(player.x+20, player.y+5, (float) Math
-					.atan(x / y), 1);
-			System.out.println("Atan of " + x + " and " + y + " is "
-					+ Math.atan(x / y));
-			if (y < 0)
-				p.direction += Math.PI;
-			player.setRotation(p.direction);
-			
-			projectiles.add(p);
 		}
 	}
 
