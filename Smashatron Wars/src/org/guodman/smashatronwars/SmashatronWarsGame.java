@@ -48,7 +48,7 @@ public class SmashatronWarsGame extends BasicGame {
 	public Weapon pistol;
 	public Weapon machine = new Weapon.Machine();
 	public Weapon shotty = new Weapon.Shotty();
-	public Weapon myWeapon = shotty;
+	public Weapon myWeapon = pistol;
 
 	public SmashatronWarsGame() {
 		super("Smashatron Wars");
@@ -190,15 +190,10 @@ public class SmashatronWarsGame extends BasicGame {
 		for (Projectile p : projectiles) {
 			p.render(container, g);
 		}
-		if (joystick != null) {
-			String joyInfo = "Joystick Info: ";
-			for (int i = 0; i < joystick.getAxisCount(); i++) {
-				joyInfo += joystick.getAxisValue(i) + " : ";
-			}
-			g.drawString(joyInfo, 10, 25);
-		}
-		g.drawString("Shotgun Ammo: " + shotty.ammo, 10, 40);
-		g.drawString("Machine Gun Ammo: " + machine.ammo, 10, 55);
+		g.drawString("Score: " + score, 10, 25);
+		g.drawString("Pistol Ammo: Infinite", 10, 40);
+		g.drawString("Shotgun Ammo: " + shotty.ammo, 10, 55);
+		g.drawString("Machine Gun Ammo: " + machine.ammo, 10, 70);
 	}
 
 	public void keyPressed(int key, char c) {
@@ -244,13 +239,19 @@ public class SmashatronWarsGame extends BasicGame {
 			if (myWeapon != shotty) {
 				myWeapon = shotty;
 			} else {
-				shotty.ammo += 10;
+				if (score >= 10) {
+					shotty.ammo += 10;
+					score -= 10;
+				}
 			}
 		} else if (button == machineButton) {
 			if (myWeapon != machine) {
 				myWeapon = machine;
 			} else {
-				machine.ammo += 50;
+				if (score >= 10) {
+					machine.ammo += 50;
+					score -= 10;
+				}
 			}
 		}
 	}
