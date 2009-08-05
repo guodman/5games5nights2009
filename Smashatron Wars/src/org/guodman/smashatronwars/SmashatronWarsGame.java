@@ -194,6 +194,7 @@ public class SmashatronWarsGame extends BasicGame {
 		g.drawString("Pistol Ammo: Infinite", 10, 40);
 		g.drawString("Shotgun Ammo: " + shotty.ammo, 10, 55);
 		g.drawString("Machine Gun Ammo: " + machine.ammo, 10, 70);
+		g.drawString("Number of Enemies: " + enemies.size(), 10, 85);
 	}
 
 	public void keyPressed(int key, char c) {
