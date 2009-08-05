@@ -4,10 +4,13 @@ import org.lwjgl.input.Controller;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public class Player {
 	float x, y;
 	int width, height;
+	Image resource;
+	float previousDir;
 
 	public Player() {
 		x = SmashatronWarsGame.WIDTH / 2 - 15;
@@ -15,12 +18,12 @@ public class Player {
 
 		width = 30;
 		height = 30;
+		resource = SmashatronWarsGame.images.get(0);
 	}
 
 	public void render(GameContainer c, Graphics g) {
-		g.drawOval(x, y, width, height);
-		g.setColor(Color.blue);
-		g.fillOval(x, y, width, height);
+		
+		g.drawImage(resource,x,y);
 	}
 
 	public void update(float x1, float y1, float delta) {
@@ -39,6 +42,21 @@ public class Player {
 			y = (SmashatronWarsGame.HEIGHT - width);
 		if (x > (SmashatronWarsGame.WIDTH - height))
 			x = (SmashatronWarsGame.WIDTH - height);
+	}
+
+	
+	boolean temp = false;
+	public void setRotation(float direction) {
+		if(!temp) {
+			previousDir = -90;
+			System.out.println("Moving to direction" + direction/Math.PI*180);
+		
+		
+			resource.rotate(-(float) (previousDir - (direction/(Math.PI*180))));
+			temp = true;
+		}
+		previousDir = direction;
+		
 	}
 
 }

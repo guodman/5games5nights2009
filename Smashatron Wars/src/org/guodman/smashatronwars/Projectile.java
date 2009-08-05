@@ -30,4 +30,6 @@ public class Projectile {
 	public void render(GameContainer c, Graphics g) {
 		g.drawOval(x,y,SIZE,SIZE);
 	}
+
+
 }

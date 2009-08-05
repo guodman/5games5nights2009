@@ -9,6 +9,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -21,6 +22,7 @@ public class SmashatronWarsGame extends BasicGame {
 	public static SmashatronWarsGame me = null;
 	public Player player;
 	public ArrayList<Projectile> projectiles;
+	public static ArrayList<Image> images;
 
 	/**
 	 * @param args
@@ -49,6 +51,8 @@ public class SmashatronWarsGame extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		projectiles = new ArrayList<Projectile>();
+		images = new ArrayList<Image>();
+		images.add(new Image("/resources/shooter.png"));
 		try {
 			Controllers.create();
 			if (Controllers.getControllerCount() > 0) {
@@ -151,12 +155,14 @@ public class SmashatronWarsGame extends BasicGame {
 
 	private void spawnProjectiles(float x, float y, int delta) {
 		if (x != 0 || y != 0) {
-			Projectile p = new Projectile(player.x, player.y, (float) Math
+			Projectile p = new Projectile(player.x+20, player.y+5, (float) Math
 					.atan(x / y), 1);
 			System.out.println("Atan of " + x + " and " + y + " is "
 					+ Math.atan(x / y));
 			if (y < 0)
 				p.direction += Math.PI;
+			player.setRotation(p.direction);
+			
 			projectiles.add(p);
 		}
 	}
