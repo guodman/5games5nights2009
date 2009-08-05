@@ -21,9 +21,9 @@ public class Projectile {
 	}
 	
 	public void update(GameContainer c, int delta) {
-		x+= Math.sin(direction)*(float)SmashatronWarsGame.SPEED*speed;
-		y+= Math.cos(direction)*(float)SmashatronWarsGame.SPEED*speed;
-		for (Enemy e : SmashatronWarsGame.me.enemies) {
+		x+= Math.sin(direction)*(float)CoverFighterGame.SPEED*speed;
+		y+= Math.cos(direction)*(float)CoverFighterGame.SPEED*speed;
+		for (Enemy e : CoverFighterGame.me.enemies) {
 			float dx = Math.abs(x-(e.x+e.SIZE/2));
 			float dy = Math.abs(y-(e.y+e.SIZE/2));
 			if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + Enemy.SIZE/2) && !e.dead && !dead) {

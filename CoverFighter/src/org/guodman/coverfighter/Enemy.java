@@ -27,20 +27,20 @@ public class Enemy {
 	}
 	
 	public void update(GameContainer container, int delta) {
-		float xdiff = SmashatronWarsGame.me.player.x - x;
-		float ydiff = SmashatronWarsGame.me.player.y - y;
+		float xdiff = CoverFighterGame.me.player.x - x;
+		float ydiff = CoverFighterGame.me.player.y - y;
 		float theta = (float) Math.atan(xdiff / ydiff);
-		if (SmashatronWarsGame.me.player.y > y) {
+		if (CoverFighterGame.me.player.y > y) {
 			x += SPEED * Math.sin(theta);
 			y += SPEED * Math.cos(theta);
 		} else {
 			x -= SPEED * Math.sin(theta);
 			y -= SPEED * Math.cos(theta);
 		}
-		float dx = Math.abs(x-SmashatronWarsGame.me.player.x);
-		float dy = Math.abs(y-SmashatronWarsGame.me.player.y);
-		if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + SmashatronWarsGame.me.player.height/2)) {
-			SmashatronWarsGame.me.dead = true;
+		float dx = Math.abs(x-CoverFighterGame.me.player.x);
+		float dy = Math.abs(y-CoverFighterGame.me.player.y);
+		if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + CoverFighterGame.me.player.height/2)) {
+			CoverFighterGame.me.dead = true;
 		}
 	}
 	

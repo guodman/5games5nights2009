@@ -14,12 +14,12 @@ public class Player {
 	float previousDir = -90;
 
 	public Player() {
-		x = SmashatronWarsGame.WIDTH / 2 - 15;
-		y = SmashatronWarsGame.HEIGHT / 2 - 15;
+		x = CoverFighterGame.WIDTH / 2 - 15;
+		y = CoverFighterGame.HEIGHT / 2 - 15;
 
 		width = 30;
 		height = 20;
-		resource = SmashatronWarsGame.images.get(0);
+		resource = CoverFighterGame.images.get(0);
 		resource.rotate(-90);
 	}
 
@@ -28,8 +28,8 @@ public class Player {
 	}
 
 	public void update(float x1, float y1, float delta) {
-		x += x1 * SmashatronWarsGame.SPEED;
-		y += y1 * SmashatronWarsGame.SPEED;
+		x += x1 * CoverFighterGame.SPEED;
+		y += y1 * CoverFighterGame.SPEED;
 
 		/**
 		 * Sanitize board values
@@ -38,10 +38,10 @@ public class Player {
 			x = 0;
 		if (y < 0)
 			y = 0;
-		if (y > (SmashatronWarsGame.HEIGHT - width))
-			y = (SmashatronWarsGame.HEIGHT - width);
-		if (x > (SmashatronWarsGame.WIDTH - height))
-			x = (SmashatronWarsGame.WIDTH - height);
+		if (y > (CoverFighterGame.HEIGHT - width))
+			y = (CoverFighterGame.HEIGHT - width);
+		if (x > (CoverFighterGame.WIDTH - height))
+			x = (CoverFighterGame.WIDTH - height);
 	}
 
 	
@@ -77,7 +77,7 @@ public class Player {
 		
 	}
 	public Projectile makeProjectile(float x, float y) {
-		return makeProjectile(SmashatronWarsGame.convertToRads(x, y));
+		return makeProjectile(CoverFighterGame.convertToRads(x, y));
 	}
 	public Projectile makeProjectile(float direction) {
 		
@@ -85,7 +85,7 @@ public class Player {
 				getGunX(),
 				getGunY(), direction, 1);
 		setRotation(direction);
-		SmashatronWarsGame.me.projectiles.add(p);
+		CoverFighterGame.me.projectiles.add(p);
 		return p;
 	}
 

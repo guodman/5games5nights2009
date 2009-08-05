@@ -22,7 +22,7 @@ public abstract class Weapon {
 		public void fire(float x, float y, int delta) {
 			if (reloadStatus <= 0 && (x != 0 || y != 0)) {
 				reloadStatus += fireRate;
-				SmashatronWarsGame.me.player.makeProjectile(x, y);
+				CoverFighterGame.me.player.makeProjectile(x, y);
 			}
 		}
 	}
@@ -37,7 +37,7 @@ public abstract class Weapon {
 		public void fire(float x, float y, int delta) {
 			if (reloadStatus <= 0 && ammo > 0 && (x != 0 || y != 0)) {
 				reloadStatus += fireRate;
-				SmashatronWarsGame.me.player.makeProjectile(x, y);
+				CoverFighterGame.me.player.makeProjectile(x, y);
 				ammo -= 1;
 			}
 		}
@@ -54,7 +54,7 @@ public abstract class Weapon {
 			if (reloadStatus <= 0 && ammo > 0 && (x != 0 || y != 0)) {
 				reloadStatus += fireRate;
 				for (int i = 0; i < 8; i++) {
-					SmashatronWarsGame.me.player.makeProjectile(x, y).direction += Math.random()*Math.PI/12 - Math.PI/6;
+					CoverFighterGame.me.player.makeProjectile(x, y).direction += Math.random()*Math.PI/12 - Math.PI/6;
 				}
 				ammo -= 1;
 			}

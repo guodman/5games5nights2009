@@ -13,13 +13,13 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-public class SmashatronWarsGame extends BasicGame {
+public class CoverFighterGame extends BasicGame {
 	public static final int WIDTH = 1024;
 	public static final int HEIGHT = 768;
 	public static final float SPEED = 0.8f;
 	public static final int ENEMY_DEPLOY_INCREMENT = 1000;
 	public static boolean quit;
-	public static SmashatronWarsGame me = null;
+	public static CoverFighterGame me = null;
 	public Player player;
 	public ArrayList<Projectile> projectiles;
 	public static ArrayList<Image> images;
@@ -33,7 +33,7 @@ public class SmashatronWarsGame extends BasicGame {
 	public static void main(String[] args) {
 		try {
 			AppGameContainer container = new AppGameContainer(
-					new SmashatronWarsGame(), WIDTH, HEIGHT, false);
+					new CoverFighterGame(), WIDTH, HEIGHT, false);
 			container.start();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,7 +50,7 @@ public class SmashatronWarsGame extends BasicGame {
 	public Weapon shotty = new Weapon.Shotty();
 	public Weapon myWeapon = pistol;
 
-	public SmashatronWarsGame() {
+	public CoverFighterGame() {
 		super("Smashatron Wars");
 		me = this;
 	}
