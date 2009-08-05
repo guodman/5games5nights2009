@@ -76,16 +76,17 @@ public class Player {
 		return result;
 		
 	}
-	public void makeProjectile(float x, float y) {
-		makeProjectile(SmashatronWarsGame.convertToRads(x, y));
+	public Projectile makeProjectile(float x, float y) {
+		return makeProjectile(SmashatronWarsGame.convertToRads(x, y));
 	}
-	public void makeProjectile(float direction) {
+	public Projectile makeProjectile(float direction) {
 		
 		Projectile p = new Projectile(
 				getGunX(),
 				getGunY(), direction, 1);
 		setRotation(direction);
 		SmashatronWarsGame.me.projectiles.add(p);
+		return p;
 	}
 
 }
