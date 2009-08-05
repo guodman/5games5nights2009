@@ -69,7 +69,7 @@ public class SmashatronWarsGame extends BasicGame {
 		}
 		player = new Player();
 		container.setAlwaysRender(true);
-		myWeapon = new Weapon.Pistol();
+		myWeapon = new Weapon.Machine();
 	}
 
 	@Override
