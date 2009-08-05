@@ -10,6 +10,7 @@ public class Enemy {
 	public float x = 0;
 	public float y = 0;
 	public int strength = 1;
+	public boolean dead = false;
 	
 	public Enemy(int str) {
 		this(str, 0, 0);

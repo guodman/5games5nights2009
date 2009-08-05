@@ -4,6 +4,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 public class Projectile {
+	public static final int SIZE = 3;
 	public float x, y;
 	public float direction;
 	public float speed;
@@ -18,9 +19,15 @@ public class Projectile {
 	public void update(GameContainer c, int delta) {
 		x+= Math.sin(direction)*(float)SmashatronWarsGame.SPEED*speed;
 		y+= Math.cos(direction)*(float)SmashatronWarsGame.SPEED*speed;
-		//System.out.println("updating a projectile. direction is " + direction + "speed is " + speed);
+		for (Enemy e : SmashatronWarsGame.me.enemies) {
+			float dx = Math.abs(x-e.x);
+			float dy = Math.abs(y-e.y);
+			if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + Enemy.SIZE/2)) {
+				e.dead = true;
+			}
+		}
 	}
 	public void render(GameContainer c, Graphics g) {
-		g.drawOval(x,y,3,3);
+		g.drawOval(x,y,SIZE,SIZE);
 	}
 }

@@ -141,6 +141,11 @@ public class SmashatronWarsGame extends BasicGame {
 					projectiles.remove(i);
 				}
 			}
+			for (int i = enemies.size() - 1; i >= 0; i--) {
+				if (enemies.get(i).dead) {
+					enemies.remove(i);
+				}
+			}
 		}
 	}
 
