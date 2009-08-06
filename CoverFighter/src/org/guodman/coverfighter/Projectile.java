@@ -46,6 +46,8 @@ public class Projectile {
 		if (life < 0) {
 			dead = true;
 		}
+		
+		
 	}
 	public void render(GameContainer c, Graphics g) {
 		g.drawOval(mapx-CoverFighterGame.screenXOffset,mapy-CoverFighterGame.screenYOffset,SIZE,SIZE);
