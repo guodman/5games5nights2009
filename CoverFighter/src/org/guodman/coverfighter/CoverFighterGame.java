@@ -44,6 +44,7 @@ public class CoverFighterGame extends BasicGame {
 
 	public Controller joystick = null;
 	public List<Enemy> enemies;
+	public List<Cover> covers;
 	public int enemyTime = ENEMY_DEPLOY_INCREMENT;
 	public boolean dead;
 	public int score = 0;
@@ -62,13 +63,13 @@ public class CoverFighterGame extends BasicGame {
 		container.setAlwaysRender(true);
 
 		startGame();
-
 	}
 
 	public void startGame() throws SlickException {
 		projectiles = new ArrayList<Projectile>();
 		images = new ArrayList<Image>();
 		enemies = new ArrayList<Enemy>();
+		covers = new ArrayList<Cover>();
 		images.add(new Image("/resources/shooter.png"));
 		try {
 			Controllers.create();
@@ -89,6 +90,11 @@ public class CoverFighterGame extends BasicGame {
 		machine = new Weapon.Machine();
 		shotty = new Weapon.Shotty();
 		myWeapon = shotty;
+
+		// add enemies
+		enemies.add(new Enemy(3, 50, 50));
+		// add cover
+		covers.add(new Cover(500, 500, 100, 100));
 	}
 
 	@Override
@@ -149,16 +155,6 @@ public class CoverFighterGame extends BasicGame {
 				myWeapon.fire(x2, y2, delta);
 			}
 
-			// add new enemies
-			enemyTime -= delta;
-			if (enemyTime < 0) {
-				enemyTime += ENEMY_DEPLOY_INCREMENT;
-				enemies.add(new Enemy(3, WIDTH / 2, 0));
-				enemies.add(new Enemy(3, WIDTH / 2, HEIGHT - Enemy.SIZE));
-				enemies.add(new Enemy(3, 0, HEIGHT / 2));
-				enemies.add(new Enemy(3, WIDTH - Enemy.SIZE, HEIGHT / 2));
-			}
-
 			for (Enemy e : enemies) {
 				e.update(container, delta);
 			}
@@ -186,6 +182,9 @@ public class CoverFighterGame extends BasicGame {
 	@Override
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
+		for (Cover c : covers) {
+			c.render(container, g);
+		}
 		for (Enemy e : enemies) {
 			e.render(container, g);
 		}
