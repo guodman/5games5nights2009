@@ -56,7 +56,7 @@ public class CoverFighterGame extends BasicGame {
 	public Weapon myWeapon = pistol;
 
 	public CoverFighterGame() {
-		super("Smashatron Wars");
+		super("Cover Fighter");
 		me = this;
 	}
 
