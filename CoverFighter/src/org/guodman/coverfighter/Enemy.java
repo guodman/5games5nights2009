@@ -54,8 +54,8 @@ public class Enemy {
 	
 	public void render(GameContainer container, Graphics g) {
 		g.setColor(Color.red);
-		g.fillOval(mapx, mapy, 30, 30);
+		g.fillOval(mapx-CoverFighterGame.screenXOffset, mapy-CoverFighterGame.screenYOffset, 30, 30);
 		g.setColor(Color.white);
-		g.drawString("" + strength, mapx, mapy);
+		g.drawString("" + strength, mapx-CoverFighterGame.screenXOffset, mapy-CoverFighterGame.screenYOffset);
 	}
 }

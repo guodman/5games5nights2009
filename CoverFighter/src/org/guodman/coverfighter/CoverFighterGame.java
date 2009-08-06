@@ -14,8 +14,10 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class CoverFighterGame extends BasicGame {
-	public static final int WIDTH = 1024;
-	public static final int HEIGHT = 768;
+	public static final int MAPWIDTH = 2048;
+	public static final int MAPHEIGHT = 1024;
+	public static final int SCREENWIDTH = 1024;
+	public static final int SCREENHEIGHT = 768;
 	public static final float SPEED = 0.8f;
 	public static final int ENEMY_DEPLOY_INCREMENT = 1000;
 	public static boolean quit;
@@ -35,7 +37,7 @@ public class CoverFighterGame extends BasicGame {
 	public static void main(String[] args) {
 		try {
 			AppGameContainer container = new AppGameContainer(
-					new CoverFighterGame(), WIDTH, HEIGHT, false);
+					new CoverFighterGame(), SCREENWIDTH, SCREENHEIGHT, false);
 			container.start();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,6 +65,7 @@ public class CoverFighterGame extends BasicGame {
 		container.setAlwaysRender(true);
 
 		startGame();
+
 	}
 
 	public void startGame() throws SlickException {
@@ -162,11 +165,11 @@ public class CoverFighterGame extends BasicGame {
 				p.update(container, delta);
 			}
 
-			// Remove projectiles that have left the screen.
+			// Remove projectiles that have left the map.
 			for (int i = projectiles.size() - 1; i >= 0; i--) {
 				Projectile remover = projectiles.get(i);
-				if (remover.mapx < 0 || remover.mapy < 0 || remover.mapx > WIDTH
-						|| remover.mapy > HEIGHT || remover.dead) {
+				if (remover.mapx < 0 || remover.mapy < 0 || remover.mapx > MAPWIDTH
+						|| remover.mapy > MAPHEIGHT || remover.dead) {
 					projectiles.remove(i);
 				}
 			}

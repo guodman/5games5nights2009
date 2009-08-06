@@ -48,7 +48,7 @@ public class Projectile {
 		}
 	}
 	public void render(GameContainer c, Graphics g) {
-		g.drawOval(mapx,mapy,SIZE,SIZE);
+		g.drawOval(mapx-CoverFighterGame.screenXOffset,mapy-CoverFighterGame.screenYOffset,SIZE,SIZE);
 	}
 
 
