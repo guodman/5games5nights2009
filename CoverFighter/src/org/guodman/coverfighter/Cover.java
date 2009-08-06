@@ -15,8 +15,12 @@ public class Cover {
 	}
 	
 	public void render(GameContainer container, Graphics g) {
-		g.setColor(Color.magenta);
+		g.setColor(Color.gray);
 		g.fillRect(mapx-CoverFighterGame.screenXOffset, mapy-CoverFighterGame.screenYOffset, width, height);
+		g.setColor(Color.blue);
+		g.drawString(mapx + ","+mapy, mapx-CoverFighterGame.screenXOffset, mapy-CoverFighterGame.screenYOffset);
+		g.drawString((mapx+width)+","+(mapy+height),mapx+width-CoverFighterGame.screenXOffset,mapy+height-CoverFighterGame.screenYOffset);
+		
 	}
 	
 	public boolean containsPoint(final int x, final int y) {
