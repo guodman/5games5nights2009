@@ -60,7 +60,7 @@ public class Player {
 			
 			//System.out.println("xdist is " + xDist + " ydist is " + yDist);
 			if(xDist <= 0 && yDist <= 0) {
-				System.out.println("Undoing movement based on collision.");
+				//System.out.println("Undoing movement based on collision.");
 				int tolerance = 50;
 				// Hit the left or right side, undo x movement.
 				if(mapx+overlapWidth <= (c.mapx+tolerance) || mapx + tolerance >= c.mapx + c.width) {
