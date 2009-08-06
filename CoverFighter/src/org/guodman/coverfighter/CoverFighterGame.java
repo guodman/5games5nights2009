@@ -14,8 +14,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class CoverFighterGame extends BasicGame {
-	public static final int MAPWIDTH = 2048;
-	public static final int MAPHEIGHT = 1024;
+	public static final int MAPWIDTH = 2000;
+	public static final int MAPHEIGHT = 5000;
 	public static final int SCREENWIDTH = 1024;
 	public static final int SCREENHEIGHT = 768;
 	public static final float SPEED = 0.8f;
@@ -94,10 +94,29 @@ public class CoverFighterGame extends BasicGame {
 		shotty = new Weapon.Shotty();
 		myWeapon = shotty;
 
-		// add enemies
-		enemies.add(new Enemy(3, 50, 50));
-		// add cover
-		covers.add(new Cover(500, 500, 100, 100));
+		// add cover and enemies
+		// add the castle
+		covers.add(new Cover(400, 400, 50, 800));
+		covers.add(new Cover(1550, 400, 50, 800));
+		covers.add(new Cover(400, 400, MAPWIDTH/2-475, 50));
+		covers.add(new Cover(MAPWIDTH/2+75, 400, 1525-MAPWIDTH/2, 50));
+		covers.add(new Cover(400, 1200, 250, 50));
+		covers.add(new Cover(850, 1200, 300, 50));
+		covers.add(new Cover(1350, 1200, 250, 50));
+		enemies.add(new Enemy(3, 450, 1150));
+		enemies.add(new Enemy(3, 500, 1150));
+		enemies.add(new Enemy(3, 550, 1150));
+		enemies.add(new Enemy(3, 600, 1150));
+		enemies.add(new Enemy(3, 1350, 1150));
+		enemies.add(new Enemy(3, 1400, 1150));
+		enemies.add(new Enemy(3, 1450, 1150));
+		enemies.add(new Enemy(3, 1500, 1150));
+		enemies.add(new Enemy(3, 850, 1150));
+		enemies.add(new Enemy(3, 900, 1150));
+		enemies.add(new Enemy(3, 950, 1150));
+		enemies.add(new Enemy(3, 1000, 1150));
+		enemies.add(new Enemy(3, 1050, 1150));
+		enemies.add(new Enemy(3, 1100, 1150));
 	}
 
 	@Override
