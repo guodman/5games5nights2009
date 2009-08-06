@@ -47,7 +47,7 @@ public class Enemy {
 		}
 		float dx = Math.abs(mapx-CoverFighterGame.me.player.mapx);
 		float dy = Math.abs(mapy-CoverFighterGame.me.player.mapy);
-		if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + CoverFighterGame.me.player.height/2)) {
+		if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + CoverFighterGame.me.player.collisionWidth/2)) {
 			CoverFighterGame.me.dead = true;
 		}
 	}

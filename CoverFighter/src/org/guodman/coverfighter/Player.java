@@ -6,7 +6,7 @@ import org.newdawn.slick.Image;
 
 public class Player {
 	float mapx, mapy;
-	int width, height;
+	int overlapWidth, collisionWidth;
 	Image resource;
 	/**
 	 * 0 is down, 90 is right, 180 is up, -90 is left
@@ -17,8 +17,8 @@ public class Player {
 		mapx = CoverFighterGame.MAPWIDTH / 2 - 15;
 		mapy = CoverFighterGame.MAPHEIGHT / 2 - 15;
 
-		width = 30;
-		height = 20;
+		overlapWidth = 30;
+		collisionWidth = 20;
 		resource = CoverFighterGame.images.get(0);
 		resource.rotate(-90);
 	}
@@ -39,10 +39,33 @@ public class Player {
 			mapx = 0;
 		if (mapy < 0)
 			mapy = 0;
-		if (mapy > (CoverFighterGame.MAPHEIGHT - width))
-			mapy = (CoverFighterGame.MAPHEIGHT - width);
-		if (mapx > (CoverFighterGame.MAPWIDTH - height))
-			mapx = (CoverFighterGame.MAPWIDTH - height);
+		if (mapy > (CoverFighterGame.MAPHEIGHT - overlapWidth))
+			mapy = (CoverFighterGame.MAPHEIGHT - overlapWidth);
+		if (mapx > (CoverFighterGame.MAPWIDTH - collisionWidth))
+			mapx = (CoverFighterGame.MAPWIDTH - collisionWidth);
+		
+		/**
+		 * Prevent player from entering cover by undoing changes if we collide.
+		 */
+		for(Cover c : CoverFighterGame.me.covers){
+			double xDist, yDist;
+			xDist = Math.min(Math.abs((mapx+overlapWidth)-c.mapx), Math.abs(mapx-(c.mapx+c.width)));
+			yDist = Math.min(Math.abs((mapy+overlapWidth)-c.mapy), Math.abs(mapy-(c.mapy+c.height)));
+			if(mapx+overlapWidth > c.mapx && mapx < (c.mapx+c.width)) {
+				xDist = 0;
+			}
+			if(mapy+overlapWidth > c.mapy && mapy < (c.mapy+c.height)) {
+				yDist = 0;
+			}
+			
+			//System.out.println("xdist is " + xDist + " ydist is " + yDist);
+			if(xDist <= 0 && yDist <= 0) {
+				System.out.println("Undoing movement based on collision.");
+				mapx -= x1 * CoverFighterGame.SPEED * delta;
+				mapy -= y1 * CoverFighterGame.SPEED * delta;
+				break;
+			}
+		}
 
 		/**
 		 * Handle screen motion
@@ -76,19 +99,15 @@ public class Player {
 		// System.out.println("Rotating by " + rotation);
 		if (rotation != 0) {
 			resource.rotate(rotation);
-			System.out.println("Rotating by " + rotation);
 		}
 		// }
 		previousDir = newDir;
-		System.out.println("New direction is " + previousDir);
 
 	}
 
 	public float getGunX() {
-		float result = (float) (width / 2f + Math
+		float result = (float) (overlapWidth / 2f + Math
 				.sin((360 - previousDir - 135f) / 180f * Math.PI) * 10f);
-		System.out
-				.println("Gun location is " + result + " and mapx is " + mapx);
 		result += mapx;
 
 		return result;
@@ -96,7 +115,7 @@ public class Player {
 	}
 
 	public float getGunY() {
-		float result = (float) (height / 2f - Math
+		float result = (float) (overlapWidth / 2f - Math
 				.cos((360 - previousDir - 135f) / 180f * Math.PI) * 10f);
 		System.out
 				.println("Gun location is " + result + " and mapy is " + mapx);
