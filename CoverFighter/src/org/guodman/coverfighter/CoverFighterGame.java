@@ -222,8 +222,8 @@ public class CoverFighterGame extends BasicGame {
 	/**
 	 * Returns the radial location from 0,0 of the point.
 	 * 
-	 * @param x
-	 * @param y
+	 * @param mapx
+	 * @param mapy
 	 */
 	public static float convertToRads(float x, float y) {
 		float direction = (float) Math.atan(x / y);
