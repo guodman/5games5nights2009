@@ -138,7 +138,7 @@ public class Player {
 
 	public Projectile makeProjectile(float direction) {
 
-		Projectile p = new Projectile(getGunX(), getGunY(), direction, 1);
+		Projectile p = new Projectile(getGunX(), getGunY(), direction, 1, false);
 		setRotation(direction);
 		CoverFighterGame.me.projectiles.add(p);
 		return p;

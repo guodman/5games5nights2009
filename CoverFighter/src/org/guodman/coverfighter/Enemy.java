@@ -33,10 +33,8 @@ public class Enemy {
 	public void fire() {
 		float xdiff = CoverFighterGame.me.player.mapx - mapx;
 		float ydiff = CoverFighterGame.me.player.mapy - mapy;
-		float theta = (float) Math.atan(xdiff / ydiff);
-		Projectile p = new Projectile( mapx+SIZE/2, mapy+SIZE/2, CoverFighterGame.convertToRads(xdiff, ydiff), SPEED*3);
-		p.nohits.add(this);
-		CoverFighterGame.me.projectiles.add(p);
+		Projectile p = new Projectile( mapx+SIZE/2, mapy+SIZE/2, CoverFighterGame.convertToRads(xdiff, ydiff), SPEED*3, true);
+		CoverFighterGame.me.enemyProjectiles.add(p);
 	}
 	
 	public void update(GameContainer container, int delta) {

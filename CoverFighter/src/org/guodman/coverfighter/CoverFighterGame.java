@@ -23,7 +23,8 @@ public class CoverFighterGame extends BasicGame {
 	public static boolean quit;
 	public static CoverFighterGame me = null;
 	public Player player;
-	public ArrayList<Projectile> projectiles;
+	public List<Projectile> projectiles;
+	public List<Projectile> enemyProjectiles;
 	public static ArrayList<Image> images;
 	public static int pistolButton;
 	public static int machineButton;
@@ -70,6 +71,7 @@ public class CoverFighterGame extends BasicGame {
 
 	public void startGame() throws SlickException {
 		projectiles = new ArrayList<Projectile>();
+		enemyProjectiles = new ArrayList<Projectile>();
 		images = new ArrayList<Image>();
 		enemies = new ArrayList<Enemy>();
 		covers = new ArrayList<Cover>();
@@ -183,6 +185,9 @@ public class CoverFighterGame extends BasicGame {
 			for (Projectile p : projectiles) {
 				p.update(container, delta);
 			}
+			for (Projectile p : enemyProjectiles) {
+				p.update(container, delta);
+			}
 
 			// Remove projectiles that have left the map.
 			for (int i = projectiles.size() - 1; i >= 0; i--) {
@@ -190,6 +195,13 @@ public class CoverFighterGame extends BasicGame {
 				if (remover.mapx < 0 || remover.mapy < 0 || remover.mapx > MAPWIDTH
 						|| remover.mapy > MAPHEIGHT || remover.dead) {
 					projectiles.remove(i);
+				}
+			}
+			for (int i = enemyProjectiles.size() - 1; i >= 0; i--) {
+				Projectile remover = enemyProjectiles.get(i);
+				if (remover.mapx < 0 || remover.mapy < 0 || remover.mapx > MAPWIDTH
+						|| remover.mapy > MAPHEIGHT || remover.dead) {
+					enemyProjectiles.remove(i);
 				}
 			}
 			for (int i = enemies.size() - 1; i >= 0; i--) {
@@ -212,6 +224,9 @@ public class CoverFighterGame extends BasicGame {
 		}
 		player.render(container, g);
 		for (Projectile p : projectiles) {
+			p.render(container, g);
+		}
+		for (Projectile p : enemyProjectiles) {
 			p.render(container, g);
 		}
 		g.drawString("Score: " + score, 10, 25);
