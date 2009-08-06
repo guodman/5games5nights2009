@@ -105,20 +105,11 @@ public class CoverFighterGame extends BasicGame {
 		covers.add(new Cover(400, 1200, 250, 50));
 		covers.add(new Cover(850, 1200, 300, 50));
 		covers.add(new Cover(1350, 1200, 250, 50));
-		enemies.add(new Enemy(3, 450, 1150));
-		enemies.add(new Enemy(3, 500, 1150));
-		enemies.add(new Enemy(3, 550, 1150));
-		enemies.add(new Enemy(3, 600, 1150));
-		enemies.add(new Enemy(3, 1350, 1150));
-		enemies.add(new Enemy(3, 1400, 1150));
-		enemies.add(new Enemy(3, 1450, 1150));
-		enemies.add(new Enemy(3, 1500, 1150));
-		enemies.add(new Enemy(3, 850, 1150));
-		enemies.add(new Enemy(3, 900, 1150));
-		enemies.add(new Enemy(3, 950, 1150));
-		enemies.add(new Enemy(3, 1000, 1150));
-		enemies.add(new Enemy(3, 1050, 1150));
-		enemies.add(new Enemy(3, 1100, 1150));
+		for (int i = 450; i < 1550; i += 50) {
+			for (int j = 450; j < 1200; j += 50) {
+				enemies.add(new Enemy(3, i, j));
+			}
+		}
 	}
 
 	@Override
