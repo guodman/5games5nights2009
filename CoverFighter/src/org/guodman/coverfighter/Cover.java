@@ -19,7 +19,7 @@ public class Cover {
 		g.fillRect(mapx-CoverFighterGame.screenXOffset, mapy-CoverFighterGame.screenYOffset, width, height);
 		g.setColor(Color.blue);
 		g.drawString(mapx + ","+mapy, mapx-CoverFighterGame.screenXOffset, mapy-CoverFighterGame.screenYOffset);
-		g.drawString((mapx+width)+","+(mapy+height),mapx+width-CoverFighterGame.screenXOffset,mapy+height-CoverFighterGame.screenYOffset);
+		g.drawString((mapx+width)+","+(mapy+height),mapx+width-CoverFighterGame.screenXOffset-70,mapy+height-CoverFighterGame.screenYOffset-30);
 		
 	}
 	
