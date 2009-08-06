@@ -14,6 +14,7 @@ public class Projectile {
 	 */
 	public float direction;
 	public float speed;
+	public static final int WALL_LIFE = 1100;
 	public float life = 1250;
 	public boolean dead = false;
 	public List nohits = new ArrayList();
@@ -33,6 +34,11 @@ public class Projectile {
 			float dy = Math.abs(mapy-(e.mapy+e.SIZE/2));
 			if (Math.sqrt((dx*dx)+(dy*dy)) < (SIZE/2 + Enemy.SIZE/2) && !e.dead && !dead && !nohits.contains(e)) {
 				e.dead = true;
+				dead = true;
+			}
+		}
+		for (Cover co : CoverFighterGame.me.covers) {
+			if (co.containsPoint((int)mapx, (int)mapy) && life < WALL_LIFE) {
 				dead = true;
 			}
 		}
