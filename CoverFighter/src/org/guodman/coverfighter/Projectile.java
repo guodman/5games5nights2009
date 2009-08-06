@@ -26,8 +26,8 @@ public class Projectile {
 	}
 	
 	public void update(GameContainer c, int delta) {
-		mapx+= Math.sin(direction)*(float)CoverFighterGame.SPEED*speed;
-		mapy+= Math.cos(direction)*(float)CoverFighterGame.SPEED*speed;
+		mapx+= Math.sin(direction)*(float)CoverFighterGame.SPEED*speed*delta;
+		mapy+= Math.cos(direction)*(float)CoverFighterGame.SPEED*speed*delta;
 		for (Enemy e : CoverFighterGame.me.enemies) {
 			float dx = Math.abs(mapx-(e.mapx+e.SIZE/2));
 			float dy = Math.abs(mapy-(e.mapy+e.SIZE/2));

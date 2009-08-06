@@ -28,8 +28,8 @@ public class Player {
 	}
 
 	public void update(float x1, float y1, float delta) {
-		mapx += x1 * CoverFighterGame.SPEED;
-		mapy += y1 * CoverFighterGame.SPEED;
+		mapx += x1 * CoverFighterGame.SPEED*delta;
+		mapy += y1 * CoverFighterGame.SPEED*delta;
 
 		/**
 		 * Sanitize board values
