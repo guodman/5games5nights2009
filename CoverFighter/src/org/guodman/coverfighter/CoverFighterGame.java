@@ -26,6 +26,8 @@ public class CoverFighterGame extends BasicGame {
 	public static int pistolButton;
 	public static int machineButton;
 	public static int shottyButton;
+	public static float screenXOffset = 0;
+	public static float screenYOffset = 0;
 
 	/**
 	 * @param args
