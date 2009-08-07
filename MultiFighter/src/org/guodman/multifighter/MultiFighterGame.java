@@ -112,6 +112,9 @@ public class MultiFighterGame extends BasicGame {
 			player = new Player(START_X-50*players.size(), START_Y);
 			world.add(player.body);
 			gameClick = 0;
+			for(ShadowPlayer s : players) {
+				s.lastshownClick = 0;
+			}
 		default:
 			player.addAction(true,key);
 			//player.body.setForce(0, -1);
