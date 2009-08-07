@@ -100,6 +100,7 @@ public class MultiFighterGame extends BasicGame {
 		case Input.KEY_SPACE:
 			for (ShadowPlayer s : players) {
 				s.body.setPosition(s.x, s.y);
+				s.body.setForce(0, 0);
 			}
 			world.remove(player.body);
 			ShadowPlayer next = new ShadowPlayer(player);
