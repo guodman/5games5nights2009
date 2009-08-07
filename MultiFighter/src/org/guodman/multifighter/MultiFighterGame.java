@@ -78,6 +78,9 @@ public class MultiFighterGame extends BasicGame {
 		}
 		player.update(container, delta);
 		world.step(delta);
+		for(ShadowPlayer s : players) {
+			s.update(container,delta);
+		}
 	}
 
 	@Override
@@ -99,7 +102,7 @@ public class MultiFighterGame extends BasicGame {
 			break;
 		case Input.KEY_SPACE:
 			for (ShadowPlayer s : players) {
-				s.body.setPosition(s.x, s.y);
+				s.body.setPosition(s.startx, s.starty);
 				s.body.setForce(0, 0);
 			}
 			world.remove(player.body);

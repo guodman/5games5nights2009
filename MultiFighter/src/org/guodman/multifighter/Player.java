@@ -18,23 +18,30 @@ public class Player {
 	 * Number of 1000s of seconds in a tick.
 	 */
 	int tickSize = 30;
-	int x;
-	int y;
+	int startx;
+	int starty;
 	public Body body;
 	private float damping = 0.007f;
 	private float rotationDamping = 20f;
+	int id;
 
 	ArrayList<Action> actionQueue = new ArrayList<Action>();
 	HashMap<Integer, ArrayList<Action>> savedActions = new HashMap<Integer, ArrayList<Action>>();
 
 	public Player(final int x, final int y) {
-		body = new Body(new Box(30, 60), 1f);
+		this(x,y,new Box(30,50),1f);
+		System.out.println("Incremented player count from " + MultiFighterGame.playerCount);
+		id = MultiFighterGame.playerCount++;
+		System.out.println("Incremented player count to " + MultiFighterGame.playerCount);
+	}
+	public Player(final int x,final int y,Box b, float mass) {
+		body = new Body(b, mass);
 		body.setDamping(damping);
 		body.setRotDamping(rotationDamping);
 		body.setRestitution(1f);
 		body.setUserData(this);
-		this.x = x;
-		this.y = y;
+		this.startx = x;
+		this.starty = y;
 		body.setPosition(x, y);
 	}
 
@@ -84,7 +91,7 @@ public class Player {
 			switch (performed.key) {
 			case Input.KEY_UP:
 				body.addForce(new Vector2f(0, -3));
-				System.out.println("APplying force up.");
+				System.out.println("Applying force up to player " + id + ".");
 				break;
 			case Input.KEY_RIGHT:
 				body.addForce(new Vector2f(3, 0));
