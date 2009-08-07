@@ -68,23 +68,28 @@ public class Player {
 				thisClick.add(performed);
 			}
 
-			if (performed.start == true) {
-				switch (performed.key) {
-				case Input.KEY_UP:
-					body.addForce(new Vector2f(0, -3));
-					System.out.println("APplying force up.");
-					break;
-				case Input.KEY_RIGHT:
-					body.addForce(new Vector2f(3, 0));
-					break;
-				case Input.KEY_LEFT:
-					body.addForce(new Vector2f(-3,0));
-					break;
-				}
-			}
+			perform(performed);
 
 		}
 
+	}
+
+	protected void perform(Action performed) {
+		if (performed.start == true) {
+			switch (performed.key) {
+			case Input.KEY_UP:
+				body.addForce(new Vector2f(0, -3));
+				System.out.println("APplying force up.");
+				break;
+			case Input.KEY_RIGHT:
+				body.addForce(new Vector2f(3, 0));
+				break;
+			case Input.KEY_LEFT:
+				body.addForce(new Vector2f(-3,0));
+				break;
+			}
+		}
+		
 	}
 
 	public static class Action {
