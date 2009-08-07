@@ -22,6 +22,8 @@ import org.newdawn.slick.SlickException;
 public class MultiFighterGame extends BasicGame {
 	public static final int SCREENWIDTH = 1024;
 	public static final int SCREENHEIGHT = 768;
+	public static int gameClick = 0;
+	public static Player player;
 
 	/**
 	 * @param args
@@ -37,7 +39,6 @@ public class MultiFighterGame extends BasicGame {
 	}
 	
 	public World world;
-	public Body character;
 
 	public boolean quit = false;
 
@@ -47,6 +48,7 @@ public class MultiFighterGame extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		container.setAlwaysRender(true);
 		startGame();
 	}
 
@@ -55,9 +57,9 @@ public class MultiFighterGame extends BasicGame {
 		StaticBody southBorder = new StaticBody(new Box(1000, 50));
 		southBorder.setPosition(512, 700);
 		world.add(southBorder);
-		character = new Body(new Box(50, 50), 1f);
-		character.setPosition(200, 50);
-		world.add(character);
+		player = new Player();
+		player.body.setPosition(200, 50);
+		world.add(player.body);
 	}
 
 	@Override
@@ -66,6 +68,7 @@ public class MultiFighterGame extends BasicGame {
 		if (quit) {
 			container.exit();
 		}
+		player.update(container, delta);
 		world.step(delta);
 	}
 
@@ -88,9 +91,14 @@ public class MultiFighterGame extends BasicGame {
 		case Input.KEY_BACK:
 			startGame();
 			break;
-		case Input.KEY_UP:
-			character.setForce(0, -1);
+		default:
+			player.addAction(true,key);
+			//player.body.setForce(0, -1);
+			
 		}
+	}
+	public void keyReleased(int key, char c) {
+		player.addAction(false,key);
 	}
 	
 	/*
