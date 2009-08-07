@@ -1,5 +1,8 @@
 package org.guodman.multifighter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.phys2d.math.ROVector2f;
 import net.phys2d.math.Vector2f;
 import net.phys2d.raw.Body;
@@ -24,6 +27,9 @@ public class MultiFighterGame extends BasicGame {
 	public static final int SCREENHEIGHT = 768;
 	public static int gameClick = 0;
 	public static Player player;
+	public static List<Player> players;
+	public static final int START_X = 100;
+	public static final int START_Y = 50;
 
 	/**
 	 * @param args
@@ -60,6 +66,7 @@ public class MultiFighterGame extends BasicGame {
 		player = new Player();
 		player.body.setPosition(200, 50);
 		world.add(player.body);
+		players = new ArrayList<Player>();
 	}
 
 	@Override
@@ -82,8 +89,6 @@ public class MultiFighterGame extends BasicGame {
 	}
 
 	public void keyPressed(int key, char c) {
-		// System.out.println("Someone pressed " + key);
-
 		switch (key) {
 		case Input.KEY_ESCAPE:
 			quit = true;
@@ -91,6 +96,13 @@ public class MultiFighterGame extends BasicGame {
 		case Input.KEY_BACK:
 			startGame();
 			break;
+		case Input.KEY_SPACE:
+			world.remove(player.body);
+			ShadowPlayer next = new ShadowPlayer(player);
+			players.add(next);
+			world.add(next.body);
+			player = new Player();
+			world.add(player.body);
 		default:
 			player.addAction(true,key);
 			//player.body.setForce(0, -1);
