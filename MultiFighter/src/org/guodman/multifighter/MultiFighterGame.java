@@ -30,6 +30,7 @@ public class MultiFighterGame extends BasicGame {
 	public static List<Player> players;
 	public static final int START_X = 100;
 	public static final int START_Y = 50;
+	public static int playerCount = 0;
 
 	/**
 	 * @param args
@@ -67,6 +68,7 @@ public class MultiFighterGame extends BasicGame {
 		player.body.setPosition(200, 50);
 		world.add(player.body);
 		players = new ArrayList<Player>();
+		playerCount = 0;
 	}
 
 	@Override
