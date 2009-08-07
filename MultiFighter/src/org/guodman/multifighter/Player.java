@@ -37,7 +37,7 @@ public class Player {
 	public Player(final int x,final int y,Box b, float mass) {
 		body = new Body(b, mass);
 		body.setDamping(damping);
-		body.setRotDamping(rotationDamping);
+		body.setRotatable(false);
 		body.setRestitution(1f);
 		body.setUserData(this);
 		this.startx = x;
