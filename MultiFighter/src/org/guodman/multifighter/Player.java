@@ -19,12 +19,18 @@ public class Player {
 	 */
 	int tickSize = 30;
 	public Body body;
+	private float damping = 0.007f;
+	private float rotationDamping = 20f;
 
 	ArrayList<Action> actionQueue = new ArrayList<Action>();
 	HashMap<Integer, ArrayList<Action>> savedActions = new HashMap<Integer, ArrayList<Action>>();
 
 	public Player() {
-		body = new Body(new Box(30, 60), 20f);
+		body = new Body(new Box(30, 60), 1f);
+		body.setDamping(damping);
+		body.setRotDamping(rotationDamping);
+		body.setRestitution(1f);
+		body.setUserData(this);
 	}
 
 	/**
