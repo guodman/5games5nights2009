@@ -18,6 +18,8 @@ public class Player {
 	 * Number of 1000s of seconds in a tick.
 	 */
 	int tickSize = 30;
+	int x;
+	int y;
 	public Body body;
 	private float damping = 0.007f;
 	private float rotationDamping = 20f;
@@ -25,12 +27,15 @@ public class Player {
 	ArrayList<Action> actionQueue = new ArrayList<Action>();
 	HashMap<Integer, ArrayList<Action>> savedActions = new HashMap<Integer, ArrayList<Action>>();
 
-	public Player() {
+	public Player(final int x, final int y) {
 		body = new Body(new Box(30, 60), 1f);
 		body.setDamping(damping);
 		body.setRotDamping(rotationDamping);
 		body.setRestitution(1f);
 		body.setUserData(this);
+		this.x = x;
+		this.y = y;
+		body.setPosition(x, y);
 	}
 
 	/**

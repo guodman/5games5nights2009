@@ -27,8 +27,8 @@ public class MultiFighterGame extends BasicGame {
 	public static final int SCREENHEIGHT = 768;
 	public static int gameClick = 0;
 	public static Player player;
-	public static List<Player> players;
-	public static final int START_X = 100;
+	public static List<ShadowPlayer> players;
+	public static final int START_X = 400;
 	public static final int START_Y = 50;
 	public static int playerCount = 0;
 
@@ -64,10 +64,9 @@ public class MultiFighterGame extends BasicGame {
 		StaticBody southBorder = new StaticBody(new Box(1000, 50));
 		southBorder.setPosition(512, 700);
 		world.add(southBorder);
-		player = new Player();
-		player.body.setPosition(200, 50);
+		player = new Player(START_X, START_Y);
 		world.add(player.body);
-		players = new ArrayList<Player>();
+		players = new ArrayList<ShadowPlayer>();
 		playerCount = 0;
 	}
 
@@ -99,12 +98,16 @@ public class MultiFighterGame extends BasicGame {
 			startGame();
 			break;
 		case Input.KEY_SPACE:
+			for (ShadowPlayer s : players) {
+				s.body.setPosition(s.x, s.y);
+			}
 			world.remove(player.body);
 			ShadowPlayer next = new ShadowPlayer(player);
 			players.add(next);
 			world.add(next.body);
-			player = new Player();
+			player = new Player(START_X-50*players.size(), START_Y);
 			world.add(player.body);
+			gameClick = 0;
 		default:
 			player.addAction(true,key);
 			//player.body.setForce(0, -1);

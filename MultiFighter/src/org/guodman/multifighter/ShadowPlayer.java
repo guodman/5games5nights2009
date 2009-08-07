@@ -7,8 +7,8 @@ import org.newdawn.slick.GameContainer;
 public class ShadowPlayer extends Player {
 	int lastshownClick = 0;
 	public  ShadowPlayer(Player p) {
+		super(p.x, p.y);
 		this.savedActions = p.savedActions;
-		
 	}
 	public void update(GameContainer c, int delta) {
 		showPlayback();
