@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="CoverFighter/src"/>
+	<classpathentry kind="src" path="Cow/src"/>
+	<classpathentry kind="src" path="HoverCave/src"/>
+	<classpathentry kind="src" path="Line/src"/>
+	<classpathentry kind="src" path="MultiFighter/src"/>
+	<classpathentry kind="src" path="Slick/examples"/>
+	<classpathentry kind="src" path="Slick/src"/>
+	<classpathentry kind="src" path="Slick/tools"/>
+	<classpathentry kind="src" path="Smashatron Wars/src"/>
+	<classpathentry kind="src" path="StabRoom/src"/>
+	<classpathentry kind="lib" path="Libraries/phys2d-060408.jar"/>
+	<classpathentry kind="lib" path="Libraries/sqlitejdbc-v056.jar"/>
+	<classpathentry kind="lib" path="Line/lib/lwjgl.jar"/>
+	<classpathentry kind="lib" path="Line/lib/natives-linux.jar"/>
+	<classpathentry kind="lib" path="Line/lib/slick-0.3.jar"/>
+	<classpathentry kind="lib" path="Line/lib/sqlitejdbc-v056.jar"/>
+	<classpathentry kind="lib" path="Slick/applet/lwjgl_util_applet.jar"/>
+	<classpathentry kind="lib" path="Slick/applet/lzma.jar"/>
+	<classpathentry kind="lib" path="Slick/JLzma.jar"/>
+	<classpathentry kind="lib" path="Slick/lib/ibxm.jar"/>
+	<classpathentry kind="lib" path="Slick/lib/jinput.jar"/>
+	<classpathentry kind="lib" path="Slick/lib/jnlp.jar"/>
+	<classpathentry kind="lib" path="Slick/lib/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="Slick/lib/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="Slick/lib/lwjgl.jar"/>
+	<classpathentry kind="lib" path="Slick/lib/natives-linux.jar"/>
+	<classpathentry kind="lib" path="Slick/lib/natives-mac.jar"/>
+	<classpathentry kind="lib" path="Slick/lib/natives-win32.jar"/>
+	<classpathentry kind="lib" path="Slick/lib/tinylinepp.jar"/>
+	<classpathentry kind="lib" path="Slick/Pack200Task.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

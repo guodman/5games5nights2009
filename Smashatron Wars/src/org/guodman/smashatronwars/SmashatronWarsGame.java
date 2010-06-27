@@ -81,7 +81,7 @@ public class SmashatronWarsGame extends BasicGame {
 			System.err.println("Couldn't initialize Controllers: "
 					+ e.getMessage());
 		}
-		player = new Player();
+		player = new Player(images.get(0));
 		dead = false;
 		pistol = new Weapon.Pistol();
 		machine = new Weapon.Machine();

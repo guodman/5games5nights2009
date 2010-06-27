@@ -13,13 +13,13 @@ public class Player {
 	 */
 	float previousDir = -90;
 
-	public Player() {
+	public Player(Image i) {
 		x = SmashatronWarsGame.WIDTH / 2 - 15;
 		y = SmashatronWarsGame.HEIGHT / 2 - 15;
 
 		width = 30;
 		height = 20;
-		resource = SmashatronWarsGame.images.get(0);
+		resource = i;
 		resource.rotate(-90);
 	}
 
